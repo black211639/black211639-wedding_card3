@@ -10,7 +10,7 @@
 
 本機路徑：
 
-`C:\Users\TEST\Desktop\Python_code\Merry\wedding_card`
+`C:\Users\ROU\Desktop\my_code\wedding_card2`
 
 GitHub repository：
 
@@ -132,7 +132,7 @@ GitHub Pages 設定頁：
 
 請從這個專案繼續修改：
 
-- 本機路徑：`C:\Users\TEST\Desktop\Python_code\Merry\wedding_card`
+- 本機路徑：`C:\Users\ROU\Desktop\my_code\wedding_card2`
 - GitHub repository：`https://github.com/black211639/wedding_card`
 - GitHub Pages 已經有初版
 - 請先看 `PROJECT_STATUS.md`

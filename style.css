@@ -140,6 +140,7 @@ button {
 
 .intro-card {
   position: relative;
+  z-index: 1;
   width: min(100%, 360px);
   padding: 40px 28px 34px;
   text-align: center;
@@ -190,6 +191,7 @@ button {
   padding: 0 28px;
   border: 0;
   border-radius: 999px;
+  cursor: pointer;
   color: #fff8f1;
   background: linear-gradient(135deg, var(--gold), var(--red));
   box-shadow: 0 14px 28px rgba(181, 18, 42, 0.14);
@@ -311,6 +313,13 @@ button {
   letter-spacing: 0.22em;
 }
 
+.hero-message {
+  margin: 20px 0 0;
+  font-size: 0.96rem;
+  letter-spacing: 0.18em;
+  color: rgba(255, 248, 241, 0.92);
+}
+
 .hero-names {
   margin: 14px 0 0;
   font-family: "Cormorant Garamond", "Playfair Display", serif;
@@ -375,6 +384,7 @@ button {
 
 .music-toggle.is-disabled {
   opacity: 0.62;
+  cursor: default;
 }
 
 .halo {
@@ -681,6 +691,22 @@ button {
 
 .info-value {
   margin: 0;
+  line-height: 1.8;
+}
+
+.reminder-list {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.reminder-list li {
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: rgba(248, 245, 241, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   line-height: 1.8;
 }
 

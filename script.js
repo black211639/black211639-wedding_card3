@@ -18,7 +18,7 @@ const defaultWeddingInfo = {
     "成了序章中最動人的註腳"
   ],
   invitation_message: [
-    "有些日子，適合藏進心裏，靜靜回味；",
+    "有些日子，適合藏進心裡，靜靜回味；",
     "而有些日子，則該與最愛的人一同擁抱。"
   ],
   map_description: [
@@ -27,7 +27,7 @@ const defaultWeddingInfo = {
   ],
   reminders: [
     "建議提前 10 至 15 分鐘抵達",
-    "現場提供地下停車位",
+    "請依現場停車資訊為準",
     "敬請準時入席"
   ],
   countdown_target: "2026-12-12T12:00:00",
@@ -50,6 +50,7 @@ const state = {
 
 document.addEventListener("DOMContentLoaded", async () => {
   document.body.classList.add("is-intro-active");
+
   const weddingInfo = await loadWeddingInfo();
   renderWeddingInfo(weddingInfo);
   setupHeroSlides();
@@ -71,10 +72,22 @@ async function loadWeddingInfo() {
       throw new Error(`Fetch failed: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    return mergeWeddingInfo(data);
   } catch {
-    return embeddedData || defaultWeddingInfo;
+    return mergeWeddingInfo(embeddedData || defaultWeddingInfo);
   }
+}
+
+function mergeWeddingInfo(data) {
+  return {
+    ...defaultWeddingInfo,
+    ...data,
+    photo_paths: {
+      ...defaultWeddingInfo.photo_paths,
+      ...(data?.photo_paths || {})
+    }
+  };
 }
 
 function readEmbeddedWeddingInfo() {
@@ -119,7 +132,7 @@ function renderWeddingInfo(data) {
   }
 
   if (introScript) {
-    introScript.innerHTML = escapeHtml((data.english_quote || defaultWeddingInfo.english_quote)).replace(/\n/g, "<br>");
+    introScript.innerHTML = escapeHtml(data.english_quote || defaultWeddingInfo.english_quote).replace(/\n/g, "<br>");
   }
 
   if (introCopy) {
@@ -140,6 +153,11 @@ function getArrayValue(value, fallback) {
 
 function renderReminderList(items) {
   const reminderList = document.getElementById("reminder-list");
+
+  if (!reminderList) {
+    return;
+  }
+
   reminderList.innerHTML = "";
 
   items.forEach((item) => {
@@ -213,6 +231,7 @@ function setupMediaFrames() {
 
     image.addEventListener("error", () => {
       frame.classList.add("is-missing");
+      console.error("Photo failed to load:", image.currentSrc || image.src);
     });
 
     image.addEventListener("load", () => {
@@ -243,12 +262,13 @@ function setupMusicToggle() {
 
   audio.addEventListener("error", () => {
     state.audioReady = false;
-    button.classList.add("is-disabled");
+    setMusicUnavailableState(button);
     updateMusicButton(false);
   });
 
   button.addEventListener("click", async () => {
     if (!state.audioReady) {
+      updateMusicButton(false);
       return;
     }
 
@@ -335,8 +355,14 @@ function updateMusicButton(isPlaying) {
   button.setAttribute("aria-pressed", String(isPlaying));
 }
 
+function setMusicUnavailableState(button) {
+  button.classList.add("is-disabled");
+  button.setAttribute("aria-label", "背景音樂目前不可用");
+  button.title = "找不到音樂檔案 assets/music/music.mp3";
+}
+
 function setupRevealObserver() {
-  const elements = document.querySelectorAll(".reveal-section, .reveal, .media-frame");
+  const elements = document.querySelectorAll(".reveal, .media-frame");
 
   elements.forEach((element) => element.classList.add("is-visible"));
 
@@ -374,14 +400,18 @@ function setupCountdown(targetString) {
       setText("countdown-hours", "0");
       setText("countdown-minutes", "0");
       setText("countdown-seconds", "0");
+
       const finished = document.getElementById("countdown-finished");
       const grid = document.getElementById("countdown-grid");
+
       if (finished) {
         finished.hidden = false;
       }
+
       if (grid) {
         grid.hidden = true;
       }
+
       if (state.countdownId) {
         window.clearInterval(state.countdownId);
       }
@@ -436,7 +466,7 @@ function formatDateZh(dateString) {
 }
 
 function escapeHtml(value) {
-  return value
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
