@@ -1,5 +1,7 @@
 # 婚禮電子喜帖
 
+註記：此版本為 `wedding_card2` H5 改版測試版。
+
 這個專案是純 `HTML / CSS / JavaScript` 靜態網站，不需要安裝 Node.js 或額外套件。
 任何一台 Windows 電腦只要有 `Git` 和 `Python 3`，而且 PowerShell 可使用 `py` 或 `python`，就可以編輯、預覽、發布。
 

@@ -1,17 +1,25 @@
 {
   "groom": "景翔",
   "bride": "佳柔",
-  "hero_message": "誠摯邀請您蒞臨見證",
   "date": "2026-12-12",
-  "time": "12:00 開席",
-  "arrival_note": "建議 11:30 入場",
-  "venue": "桃園八德彭園",
-  "address": "334桃園市八德區介壽路一段728號3樓",
-  "map_link": "https://maps.app.goo.gl/kJ4QmBb84BgEKgTTA",
+  "hero_message": "誠摯邀請您蒞臨見證",
+  "venue": "桃園彭園會館",
+  "hall": "宴會廳待確認",
+  "time": "午宴｜迎賓入席 12:00",
+  "address": "桃園市桃園區中正路61號",
+  "parking": "請依現場停車資訊為準",
+  "map_link": "https://www.google.com/maps/search/?api=1&query=桃園彭園會館",
+  "english_quote": "I love you not for who you are,\nbut for who I am with you.",
+  "intro_lines": [
+    "我們在彼此的目光中",
+    "找到了歸屬的坐標",
+    "默契的微笑",
+    "手心傳來的溫度",
+    "成了序章中最動人的註腳"
+  ],
   "invitation_message": [
-    "感謝您一路以來的陪伴與祝福。",
-    "我們將於這一天攜手步入人生新的旅程，",
-    "誠摯邀請您蒞臨，與我們一同分享這份喜悅。"
+    "有些日子，適合藏進心裏，靜靜回味；",
+    "而有些日子，則該與最愛的人一同擁抱。"
   ],
   "map_description": [
     "點擊下方按鈕即可開啟 Google 地圖導航。",
@@ -22,5 +30,11 @@
     "現場提供地下停車位",
     "敬請準時入席"
   ],
-  "note": "敬請準時入席"
+  "countdown_target": "2026-12-12T12:00:00",
+  "photo_paths": {
+    "cover": "assets/photos/cover.jpg",
+    "photo1": "assets/photos/photo1.jpg",
+    "photo2": "assets/photos/photo2.jpg",
+    "photo3": "assets/photos/photo3.jpg"
+  }
 }

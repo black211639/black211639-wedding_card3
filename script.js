@@ -1,17 +1,25 @@
 const defaultWeddingInfo = {
   groom: "景翔",
   bride: "佳柔",
-  hero_message: "誠摯邀請您蒞臨見證",
   date: "2026-12-12",
-  time: "12:00 開席",
-  arrival_note: "建議 11:30 入場",
-  venue: "桃園八德彭園",
-  address: "334桃園市八德區介壽路一段728號3樓",
-  map_link: "https://maps.app.goo.gl/kJ4QmBb84BgEKgTTA",
+  hero_message: "誠摯邀請您蒞臨見證",
+  venue: "桃園彭園會館",
+  hall: "宴會廳待確認",
+  time: "午宴｜迎賓入席 12:00",
+  address: "桃園市桃園區中正路61號",
+  parking: "請依現場停車資訊為準",
+  map_link: "https://www.google.com/maps/search/?api=1&query=桃園彭園會館",
+  english_quote: "I love you not for who you are,\nbut for who I am with you.",
+  intro_lines: [
+    "我們在彼此的目光中",
+    "找到了歸屬的坐標",
+    "默契的微笑",
+    "手心傳來的溫度",
+    "成了序章中最動人的註腳"
+  ],
   invitation_message: [
-    "感謝您一路以來的陪伴與祝福。",
-    "我們將於這一天攜手步入人生新的旅程，",
-    "誠摯邀請您蒞臨，與我們一同分享這份喜悅。"
+    "有些日子，適合藏進心裏，靜靜回味；",
+    "而有些日子，則該與最愛的人一同擁抱。"
   ],
   map_description: [
     "點擊下方按鈕即可開啟 Google 地圖導航。",
@@ -22,31 +30,33 @@ const defaultWeddingInfo = {
     "現場提供地下停車位",
     "敬請準時入席"
   ],
-  note: "敬請準時入席"
+  countdown_target: "2026-12-12T12:00:00",
+  photo_paths: {
+    cover: "assets/photos/cover.jpg",
+    photo1: "assets/photos/photo1.jpg",
+    photo2: "assets/photos/photo2.jpg",
+    photo3: "assets/photos/photo3.jpg"
+  }
 };
 
-const photoSources = [
-  "assets/photos/photo1.jpg",
-  "assets/photos/photo2.jpg",
-  "assets/photos/photo3.jpg"
-];
-
 const state = {
-  photos: [],
-  currentIndex: 0,
-  autoPlayId: null,
-  startX: 0,
-  deltaX: 0,
-  audioReady: true
+  heroIndex: 0,
+  heroIntervalId: null,
+  audioReady: true,
+  audioActivated: false,
+  countdownId: null
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
   const weddingInfo = await loadWeddingInfo();
   renderWeddingInfo(weddingInfo);
-  setupCarousel();
+  setupHeroSlides();
+  setupMediaFrames();
   setupMapButton(weddingInfo.map_link);
   setupMusicToggle();
-  setupFadeIn();
+  setupPageInteractionForAudio();
+  setupRevealObserver();
+  setupCountdown(weddingInfo.countdown_target || defaultWeddingInfo.countdown_target);
 });
 
 async function loadWeddingInfo() {
@@ -60,14 +70,8 @@ async function loadWeddingInfo() {
     }
 
     return await response.json();
-  } catch (fetchError) {
-    if (embeddedData) {
-      console.warn("Failed to load wedding_info.json, using embedded fallback.", fetchError);
-      return embeddedData;
-    }
-
-    console.warn("Failed to load wedding_info.json, using built-in fallback.", fetchError);
-    return defaultWeddingInfo;
+  } catch {
+    return embeddedData || defaultWeddingInfo;
   }
 }
 
@@ -76,8 +80,7 @@ function readEmbeddedWeddingInfo() {
     const element = document.getElementById("embedded-wedding-data");
     const raw = element?.textContent?.trim();
     return raw ? JSON.parse(raw) : null;
-  } catch (error) {
-    console.warn("Failed to parse embedded wedding data.", error);
+  } catch {
     return null;
   }
 }
@@ -85,42 +88,52 @@ function readEmbeddedWeddingInfo() {
 function renderWeddingInfo(data) {
   const groom = data.groom || defaultWeddingInfo.groom;
   const bride = data.bride || defaultWeddingInfo.bride;
-  const heroMessage = data.hero_message || defaultWeddingInfo.hero_message;
-  const dateText = formatDate(data.date || defaultWeddingInfo.date);
-  const invitationMessage = Array.isArray(data.invitation_message) && data.invitation_message.length
-    ? data.invitation_message
-    : defaultWeddingInfo.invitation_message;
-  const mapDescription = Array.isArray(data.map_description) && data.map_description.length
-    ? data.map_description
-    : defaultWeddingInfo.map_description;
-  const reminders = Array.isArray(data.reminders) && data.reminders.length
-    ? data.reminders
-    : defaultWeddingInfo.reminders;
+  const dateDisplay = formatDateZh(data.date || defaultWeddingInfo.date);
+  const shortDate = formatDateDots(data.date || defaultWeddingInfo.date);
+  const introLines = getArrayValue(data.intro_lines, defaultWeddingInfo.intro_lines);
+  const invitationLines = getArrayValue(data.invitation_message, defaultWeddingInfo.invitation_message);
+  const mapLines = getArrayValue(data.map_description, defaultWeddingInfo.map_description);
+  const reminders = getArrayValue(data.reminders, defaultWeddingInfo.reminders);
 
-  setText("groom-name", groom);
-  setText("bride-name", bride);
-  setText("hero-date", dateText);
-  setText("info-date", dateText);
-  setText("info-time", data.time || defaultWeddingInfo.time);
-  setText("info-arrival-note", data.arrival_note || defaultWeddingInfo.arrival_note);
+  setText("hero-date", shortDate);
+  setText("hero-names", `${groom} & ${bride}`);
+  setText("hero-message", data.hero_message || defaultWeddingInfo.hero_message);
+  setText("info-date", `${dateDisplay} 星期六`);
   setText("info-venue", data.venue || defaultWeddingInfo.venue);
+  setText("info-hall", data.hall || defaultWeddingInfo.hall);
+  setText("info-time", data.time || defaultWeddingInfo.time);
   setText("info-address", data.address || defaultWeddingInfo.address);
-  setText("footer-invite", `${groom} & ${bride} 敬邀`);
+  setText("info-parking", data.parking || defaultWeddingInfo.parking);
+  setText("map-description-line1", mapLines[0] || defaultWeddingInfo.map_description[0]);
+  setText("map-description-line2", mapLines[1] || defaultWeddingInfo.map_description[1]);
 
-  const heroMessageElement = document.querySelector(".hero-message");
-  if (heroMessageElement) {
-    heroMessageElement.textContent = heroMessage;
+  const introNames = document.querySelector(".intro-names");
+  const introScript = document.querySelector(".intro-script");
+  const introCopy = document.querySelector(".intro-copy");
+  const welcomeCopy = document.querySelector(".welcome-copy");
+
+  if (introNames) {
+    introNames.textContent = `${groom} & ${bride}`;
   }
 
-  invitationMessage.forEach((line, index) => {
-    setText(`invitation-message-line${index + 1}`, line);
-  });
+  if (introScript) {
+    introScript.innerHTML = escapeHtml((data.english_quote || defaultWeddingInfo.english_quote)).replace(/\n/g, "<br>");
+  }
 
-  mapDescription.forEach((line, index) => {
-    setText(`map-description-line${index + 1}`, line);
-  });
+  if (introCopy) {
+    introCopy.innerHTML = introLines.map((line) => `<p>${escapeHtml(line)}</p>`).join("");
+  }
+
+  if (welcomeCopy) {
+    welcomeCopy.innerHTML = invitationLines.map((line) => `<p>${escapeHtml(line)}</p>`).join("");
+  }
 
   renderReminderList(reminders);
+  applyPhotoPaths(data.photo_paths || defaultWeddingInfo.photo_paths);
+}
+
+function getArrayValue(value, fallback) {
+  return Array.isArray(value) && value.length ? value : fallback;
 }
 
 function renderReminderList(items) {
@@ -134,69 +147,85 @@ function renderReminderList(items) {
   });
 }
 
-function setupCarousel() {
-  state.photos = photoSources.slice();
+function applyPhotoPaths(photoPaths) {
+  const heroSlides = document.querySelectorAll("[data-hero-slide]");
+  const coverPaths = [photoPaths.cover, photoPaths.photo1, photoPaths.photo2].filter(Boolean);
 
-  const track = document.getElementById("carousel-track");
-  const dots = document.getElementById("carousel-dots");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
+  heroSlides.forEach((slide, index) => {
+    if (coverPaths[index]) {
+      slide.style.backgroundImage = `url('${coverPaths[index]}')`;
+    }
+  });
 
-  track.innerHTML = "";
-  dots.innerHTML = "";
+  const imageMap = [
+    { selector: ".split-media img", src: photoPaths.photo1 },
+    { selector: ".oval-photo img", src: photoPaths.photo2 },
+    { selector: ".gallery-pair .media-frame:nth-child(1) img", src: photoPaths.photo1 },
+    { selector: ".gallery-pair .media-frame:nth-child(2) img", src: photoPaths.photo2 },
+    { selector: ".wide-frame img", src: photoPaths.photo3 },
+    { selector: ".calendar-photo img", src: photoPaths.cover },
+    { selector: ".countdown-photo img", src: photoPaths.photo3 },
+    { selector: ".thanks-photo img", src: photoPaths.cover }
+  ];
 
-  state.photos.forEach((src, index) => {
-    const slide = document.createElement("article");
-    slide.className = "carousel-slide";
+  imageMap.forEach(({ selector, src }) => {
+    const image = document.querySelector(selector);
+    if (image && src) {
+      image.src = src;
+    }
+  });
 
-    const image = document.createElement("img");
-    image.src = src;
-    image.alt = `婚紗照 ${index + 1}`;
-    image.loading = index === 0 ? "eager" : "lazy";
+  const chineseGalleryImages = document.querySelectorAll(".chinese-gallery .media-frame img");
+  [photoPaths.photo2, photoPaths.photo3, photoPaths.photo1].forEach((src, index) => {
+    if (chineseGalleryImages[index] && src) {
+      chineseGalleryImages[index].src = src;
+    }
+  });
+}
+
+function setupHeroSlides() {
+  const slides = [...document.querySelectorAll("[data-hero-slide]")];
+
+  if (slides.length < 2) {
+    return;
+  }
+
+  state.heroIntervalId = window.setInterval(() => {
+    slides[state.heroIndex].classList.remove("is-active");
+    state.heroIndex = (state.heroIndex + 1) % slides.length;
+    slides[state.heroIndex].classList.add("is-active");
+  }, 5000);
+}
+
+function setupMediaFrames() {
+  const frames = document.querySelectorAll(".media-frame");
+
+  frames.forEach((frame) => {
+    const image = frame.querySelector("img");
+
+    if (!image) {
+      return;
+    }
+
+    frame.classList.remove("is-missing");
+
     image.addEventListener("error", () => {
-      console.error(`Photo failed to load: ${src}`);
-      image.hidden = true;
-      if (!slide.querySelector(".slide-placeholder")) {
-        const placeholder = document.createElement("div");
-        placeholder.className = "slide-placeholder";
-        placeholder.innerHTML = "請將婚紗照放到<br>assets/photos/ 底下";
-        slide.appendChild(placeholder);
-      }
+      frame.classList.add("is-missing");
     });
 
-    slide.appendChild(image);
-    track.appendChild(slide);
-
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.setAttribute("aria-label", `切換到第 ${index + 1} 張`);
-    dot.addEventListener("click", () => {
-      goToSlide(index);
-      restartAutoPlay();
+    image.addEventListener("load", () => {
+      frame.classList.remove("is-missing");
     });
-    dots.appendChild(dot);
   });
-
-  prevBtn.addEventListener("click", () => {
-    moveSlide(-1);
-    restartAutoPlay();
-  });
-
-  nextBtn.addEventListener("click", () => {
-    moveSlide(1);
-    restartAutoPlay();
-  });
-
-  track.addEventListener("touchstart", handleTouchStart, { passive: true });
-  track.addEventListener("touchmove", handleTouchMove, { passive: true });
-  track.addEventListener("touchend", handleTouchEnd);
-
-  goToSlide(0);
-  startAutoPlay();
 }
 
 function setupMapButton(mapLink) {
   const button = document.getElementById("map-button");
+
+  if (!button) {
+    return;
+  }
+
   button.addEventListener("click", () => {
     window.open(mapLink || defaultWeddingInfo.map_link, "_blank", "noopener,noreferrer");
   });
@@ -212,8 +241,8 @@ function setupMusicToggle() {
 
   audio.addEventListener("error", () => {
     state.audioReady = false;
+    button.classList.add("is-disabled");
     updateMusicButton(false);
-    console.warn("Background music file could not be loaded: assets/music/bgm.mp3");
   });
 
   button.addEventListener("click", async () => {
@@ -221,12 +250,13 @@ function setupMusicToggle() {
       return;
     }
 
+    state.audioActivated = true;
+
     if (audio.paused) {
       try {
         await audio.play();
         updateMusicButton(true);
-      } catch (error) {
-        console.warn("Background music playback was blocked or unavailable.", error);
+      } catch {
         updateMusicButton(false);
       }
       return;
@@ -240,6 +270,30 @@ function setupMusicToggle() {
   audio.addEventListener("play", () => updateMusicButton(true));
 }
 
+function setupPageInteractionForAudio() {
+  const audio = document.getElementById("bgm-audio");
+
+  if (!audio) {
+    return;
+  }
+
+  const tryActivate = async () => {
+    if (!state.audioReady || state.audioActivated) {
+      return;
+    }
+
+    state.audioActivated = true;
+    try {
+      await audio.play();
+      updateMusicButton(true);
+    } catch {
+      state.audioActivated = false;
+    }
+  };
+
+  document.addEventListener("pointerdown", tryActivate, { once: true });
+}
+
 function updateMusicButton(isPlaying) {
   const button = document.getElementById("music-toggle");
 
@@ -249,14 +303,14 @@ function updateMusicButton(isPlaying) {
 
   button.classList.toggle("is-playing", isPlaying);
   button.setAttribute("aria-pressed", String(isPlaying));
-  button.setAttribute("aria-label", isPlaying ? "暫停背景音樂" : "播放背景音樂");
 }
 
-function setupFadeIn() {
-  const sections = document.querySelectorAll(".fade-section");
+function setupRevealObserver() {
+  const elements = document.querySelectorAll(".reveal-section, .reveal, .media-frame");
+
+  elements.forEach((element) => element.classList.add("is-visible"));
 
   if (!("IntersectionObserver" in window)) {
-    sections.forEach((section) => section.classList.add("is-visible"));
     return;
   }
 
@@ -268,66 +322,56 @@ function setupFadeIn() {
       }
     });
   }, {
-    threshold: 0.18
+    threshold: 0.16
   });
 
-  sections.forEach((section, index) => {
-    section.style.transitionDelay = `${Math.min(index * 90, 360)}ms`;
-    observer.observe(section);
-  });
+  elements.forEach((element) => observer.observe(element));
 }
 
-function startAutoPlay() {
-  stopAutoPlay();
-  state.autoPlayId = window.setInterval(() => moveSlide(1), 6000);
-}
+function setupCountdown(targetString) {
+  const target = new Date(targetString);
 
-function stopAutoPlay() {
-  if (state.autoPlayId) {
-    window.clearInterval(state.autoPlayId);
-    state.autoPlayId = null;
-  }
-}
-
-function restartAutoPlay() {
-  stopAutoPlay();
-  startAutoPlay();
-}
-
-function moveSlide(step) {
-  const nextIndex = (state.currentIndex + step + state.photos.length) % state.photos.length;
-  goToSlide(nextIndex);
-}
-
-function goToSlide(index) {
-  const track = document.getElementById("carousel-track");
-  const dots = [...document.querySelectorAll("#carousel-dots button")];
-
-  state.currentIndex = index;
-  track.style.transform = `translateX(-${index * 100}%)`;
-
-  dots.forEach((dot, dotIndex) => {
-    dot.classList.toggle("is-active", dotIndex === index);
-  });
-}
-
-function handleTouchStart(event) {
-  state.startX = event.touches[0].clientX;
-  state.deltaX = 0;
-}
-
-function handleTouchMove(event) {
-  state.deltaX = event.touches[0].clientX - state.startX;
-}
-
-function handleTouchEnd() {
-  if (Math.abs(state.deltaX) > 45) {
-    moveSlide(state.deltaX < 0 ? 1 : -1);
-    restartAutoPlay();
+  if (Number.isNaN(target.getTime())) {
+    return;
   }
 
-  state.startX = 0;
-  state.deltaX = 0;
+  const update = () => {
+    const now = new Date();
+    const diff = target.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      setText("countdown-days", "0");
+      setText("countdown-hours", "0");
+      setText("countdown-minutes", "0");
+      setText("countdown-seconds", "0");
+      const finished = document.getElementById("countdown-finished");
+      const grid = document.getElementById("countdown-grid");
+      if (finished) {
+        finished.hidden = false;
+      }
+      if (grid) {
+        grid.hidden = true;
+      }
+      if (state.countdownId) {
+        window.clearInterval(state.countdownId);
+      }
+      return;
+    }
+
+    const seconds = Math.floor(diff / 1000);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainSeconds = seconds % 60;
+
+    setText("countdown-days", String(days));
+    setText("countdown-hours", String(hours).padStart(2, "0"));
+    setText("countdown-minutes", String(minutes).padStart(2, "0"));
+    setText("countdown-seconds", String(remainSeconds).padStart(2, "0"));
+  };
+
+  update();
+  state.countdownId = window.setInterval(update, 1000);
 }
 
 function setText(id, value) {
@@ -337,9 +381,8 @@ function setText(id, value) {
   }
 }
 
-function formatDate(dateString) {
+function formatDateDots(dateString) {
   const date = new Date(dateString);
-
   if (Number.isNaN(date.getTime())) {
     return dateString;
   }
@@ -348,4 +391,23 @@ function formatDate(dateString) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}.${month}.${day}`;
+}
+
+function formatDateZh(dateString) {
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) {
+    return dateString;
+  }
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}年${month}月${day}日`;
+}
+
+function escapeHtml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
 }

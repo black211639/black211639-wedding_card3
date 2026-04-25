@@ -2,128 +2,325 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>景翔 & 佳柔 婚禮電子喜帖</title>
-  <meta name="description" content="誠摯邀請您蒞臨見證景翔與佳柔的婚禮時刻。">
+  <meta name="description" content="景翔與佳柔的婚禮電子喜帖。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+TC:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="site-shell">
-    <section class="hero fade-section" id="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <p class="hero-kicker">Wedding Invitation</p>
-        <p class="hero-message">誠摯邀請您蒞臨見證</p>
-        <h1 class="hero-title">
-          <span id="groom-name">景翔</span>
-          <span class="ampersand">&amp;</span>
-          <span id="bride-name">佳柔</span>
-        </h1>
-        <p class="hero-date" id="hero-date">2026.12.12</p>
-      </div>
-    </section>
+  <div class="site-shell">
+    <button class="music-toggle" id="music-toggle" type="button" aria-label="播放背景音樂" aria-pressed="false">♫</button>
 
-    <section class="section invitation-section fade-section" aria-labelledby="invitation-title">
-      <div class="section-heading centered-heading">
-        <p class="eyebrow">Invitation</p>
-        <h2 id="invitation-title">誠摯邀請</h2>
-      </div>
-      <div class="card invitation-card">
-        <p id="invitation-message-line1">感謝您一路以來的陪伴與祝福。</p>
-        <p id="invitation-message-line2">我們將於這一天攜手步入人生新的旅程，</p>
-        <p id="invitation-message-line3">誠摯邀請您蒞臨，與我們一同分享這份喜悅。</p>
-      </div>
-    </section>
+    <audio id="bgm-audio" preload="none" loop>
+      <!-- 可修改：背景音樂 -->
+      <source src="assets/music/music.mp3" type="audio/mpeg">
+    </audio>
 
-    <section class="section photo-section fade-section" aria-labelledby="gallery-title">
-      <div class="section-heading centered-heading">
-        <p class="eyebrow">Memories</p>
-        <h2 id="gallery-title">婚紗照</h2>
-      </div>
-      <div class="carousel" id="carousel" aria-label="婚紗照輪播">
-        <div class="carousel-track" id="carousel-track"></div>
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="prev-btn" type="button" aria-label="上一張">‹</button>
-          <div class="carousel-dots" id="carousel-dots" aria-label="輪播頁籤"></div>
-          <button class="carousel-btn" id="next-btn" type="button" aria-label="下一張">›</button>
+    <main class="invitation">
+      <section class="section hero-section is-visible" id="hero">
+        <div class="hero-media">
+          <div class="hero-overlay"></div>
+          <!-- 可修改：照片路徑 -->
+          <div class="hero-slide is-active" data-hero-slide style="background-image: url('assets/photos/cover.jpg');"></div>
+          <div class="hero-slide" data-hero-slide style="background-image: url('assets/photos/photo1.jpg');"></div>
+          <div class="hero-slide" data-hero-slide style="background-image: url('assets/photos/photo2.jpg');"></div>
         </div>
-      </div>
-    </section>
+        <div class="hero-content reveal is-visible">
+          <p class="hero-english hero-line delay-1">WE</p>
+          <p class="hero-english hero-line delay-2">GET</p>
+          <p class="hero-english hero-line delay-3">MARRIED</p>
+          <p class="hero-date reveal is-visible delay-4" id="hero-date">2026.12.12</p>
+          <!-- 可修改：新人姓名 -->
+          <h1 class="hero-names reveal is-visible delay-5" id="hero-names">景翔 &amp; 佳柔</h1>
+        </div>
+        <div class="ornament ornament-heart" aria-hidden="true">♥</div>
+      </section>
 
-    <section class="section info-section fade-section" aria-labelledby="info-title">
-      <div class="section-heading centered-heading">
-        <p class="eyebrow">Wedding Info</p>
-        <h2 id="info-title">婚禮資訊</h2>
-      </div>
-      <div class="card info-grid">
-        <article class="info-item">
-          <h3>日期</h3>
-          <p id="info-date"></p>
-        </article>
-        <article class="info-item">
-          <h3>時間</h3>
-          <p id="info-time"></p>
-          <p class="sub-info" id="info-arrival-note"></p>
-        </article>
-        <article class="info-item">
-          <h3>地點</h3>
-          <p id="info-venue"></p>
-        </article>
-        <article class="info-item info-item-address">
-          <h3>地址</h3>
-          <p id="info-address"></p>
-        </article>
-      </div>
-    </section>
+      <section class="section intro-section is-visible" id="intro">
+        <div class="halo halo-left"></div>
+        <div class="halo halo-right"></div>
+        <div class="section-card split-card">
+          <div class="split-media media-frame">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo1.jpg" alt="景翔與佳柔">
+            <div class="media-placeholder">
+              <p class="placeholder-label">PHOTO</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+          <div class="split-copy reveal is-visible">
+            <!-- 可修改：新人姓名 -->
+            <p class="intro-names">景翔 &amp; 佳柔</p>
+            <p class="intro-script">I love you not for who you are,<br>but for who I am with you.</p>
+            <div class="intro-copy">
+              <p>我們在彼此的目光中</p>
+              <p>找到了歸屬的坐標</p>
+              <p>默契的微笑</p>
+              <p>手心傳來的溫度</p>
+              <p>成了序章中最動人的註腳</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section class="section map-section fade-section" aria-labelledby="map-title">
-      <div class="section-heading centered-heading">
-        <p class="eyebrow">Map</p>
-        <h2 id="map-title">地圖導航</h2>
-      </div>
-      <div class="card map-card">
-        <p id="map-description-line1">點擊下方按鈕即可開啟 Google 地圖導航。</p>
-        <p id="map-description-line2">建議提早出發，預留交通與停車時間。</p>
-        <button class="map-button" id="map-button" type="button">開啟 Google 地圖</button>
-      </div>
-    </section>
+      <section class="section welcome-section is-visible" id="welcome">
+        <div class="section-card invitation-card reveal is-visible">
+          <p class="section-english">WELCOME TO OUR WEDDING</p>
+          <div class="oval-photo media-frame">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo2.jpg" alt="邀請照片">
+            <div class="media-placeholder">
+              <p class="placeholder-label">INVITATION</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+            <div class="oval-message">
+              <p>邀請你們</p>
+              <p>參加我們的婚禮</p>
+            </div>
+          </div>
+          <div class="welcome-copy">
+            <p>有些日子，適合藏進心裏，靜靜回味；</p>
+            <p>而有些日子，則該與最愛的人一同擁抱。</p>
+          </div>
+        </div>
+      </section>
 
-    <section class="section reminder-section fade-section" aria-labelledby="reminder-title">
-      <div class="section-heading centered-heading">
-        <p class="eyebrow">Reminder</p>
-        <h2 id="reminder-title">當日提醒</h2>
-      </div>
-      <div class="card reminder-card">
-        <ul class="reminder-list" id="reminder-list"></ul>
-      </div>
-    </section>
-  </main>
+      <section class="section gallery-section is-visible" id="gallery">
+        <div class="gallery-head reveal is-visible">
+          <p class="section-english">PHOTO STORY</p>
+          <h2 class="section-title">照片牆</h2>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-pair">
+            <div class="media-frame tall-frame reveal is-visible">
+              <!-- 可修改：照片路徑 -->
+              <img src="assets/photos/photo1.jpg" alt="照片牆 1">
+              <div class="media-placeholder">
+                <p class="placeholder-label">MEMORY 01</p>
+                <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+              </div>
+            </div>
+            <div class="media-frame tall-frame reveal is-visible delay-1">
+              <!-- 可修改：照片路徑 -->
+              <img src="assets/photos/photo2.jpg" alt="照片牆 2">
+              <div class="media-placeholder">
+                <p class="placeholder-label">MEMORY 02</p>
+                <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-divider" aria-hidden="true">♥</div>
+          <div class="media-frame wide-frame reveal is-visible delay-2">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo3.jpg" alt="照片牆 3">
+            <div class="media-placeholder">
+              <p class="placeholder-label">MEMORY 03</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <footer class="footer fade-section">
-    <p id="footer-invite">景翔 & 佳柔 敬邀</p>
-  </footer>
+      <section class="section calendar-section is-visible" id="calendar">
+        <div class="calendar-photo media-frame">
+          <!-- 可修改：照片路徑 -->
+          <img src="assets/photos/cover.jpg" alt="婚禮日期照片">
+          <div class="media-placeholder">
+            <p class="placeholder-label">DATE</p>
+            <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+          </div>
+          <div class="calendar-overlay"></div>
+          <div class="calendar-content reveal is-visible">
+            <div class="calendar-date">12 / 12</div>
+            <div class="calendar-card">
+              <p class="calendar-year">2026 DECEMBER</p>
+              <div class="calendar-grid" aria-label="2026 年 12 月月曆">
+                <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+                <span class="muted">29</span><span class="muted">30</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span class="marked">12</span>
+                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span class="muted">1</span><span class="muted">2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <audio id="bgm-audio" preload="none" loop>
-    <source src="assets/music/bgm.mp3" type="audio/mpeg">
-  </audio>
+      <section class="section chinese-section is-visible" id="blessing">
+        <div class="section-card chinese-card reveal is-visible">
+          <div class="double-happiness">囍</div>
+          <div class="blessing-copy">
+            <p>兩姓聯姻，一堂締約</p>
+            <p>良辰永結，匹配同稱</p>
+            <p>願你我往後餘生</p>
+            <p>冷暖相知，喜樂同享</p>
+            <p>同量天地寬，共度日月長</p>
+          </div>
+        </div>
+      </section>
 
-  <button class="music-toggle" id="music-toggle" type="button" aria-label="播放背景音樂" aria-pressed="false">♫</button>
+      <section class="section chinese-gallery-section is-visible" id="chinese-gallery">
+        <div class="gallery-head reveal is-visible">
+          <p class="section-english">CHINESE STYLE</p>
+          <h2 class="section-title">中式婚紗</h2>
+        </div>
+        <div class="chinese-gallery">
+          <div class="media-frame reveal is-visible">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo2.jpg" alt="中式婚紗 1">
+            <div class="media-placeholder">
+              <p class="placeholder-label">CHINESE 01</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+          <div class="gallery-divider ribbon-divider" aria-hidden="true">♥</div>
+          <div class="media-frame reveal is-visible delay-1">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo3.jpg" alt="中式婚紗 2">
+            <div class="media-placeholder">
+              <p class="placeholder-label">CHINESE 02</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+          <div class="media-frame reveal is-visible delay-2">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo1.jpg" alt="中式婚紗 3">
+            <div class="media-placeholder">
+              <p class="placeholder-label">CHINESE 03</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section info-section is-visible" id="info">
+        <div class="section-card info-card reveal is-visible">
+          <p class="section-english">WEDDING INFO</p>
+          <h2 class="section-title">婚禮資訊</h2>
+          <div class="info-list">
+            <article class="info-item">
+              <span class="info-label">日期</span>
+              <!-- 可修改：婚禮日期 -->
+              <p class="info-value" id="info-date">2026年12月12日 星期六</p>
+            </article>
+            <article class="info-item">
+              <span class="info-label">地點</span>
+              <!-- 可修改：婚禮地點 -->
+              <p class="info-value" id="info-venue">桃園彭園會館</p>
+            </article>
+            <article class="info-item">
+              <span class="info-label">廳房</span>
+              <!-- 可修改：宴會廳 -->
+              <p class="info-value" id="info-hall">宴會廳待確認</p>
+            </article>
+            <article class="info-item">
+              <span class="info-label">時間</span>
+              <p class="info-value" id="info-time">午宴｜迎賓入席 12:00</p>
+            </article>
+            <article class="info-item">
+              <span class="info-label">地址</span>
+              <!-- 可修改：婚禮地址 -->
+              <p class="info-value" id="info-address">桃園市桃園區中正路61號</p>
+            </article>
+            <article class="info-item">
+              <span class="info-label">停車</span>
+              <p class="info-value" id="info-parking">請依現場停車資訊為準</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section map-section is-visible" id="map">
+        <div class="section-card map-card reveal is-visible">
+          <p class="section-english">MAP &amp; TRAFFIC</p>
+          <h2 class="section-title">地圖 / 交通資訊</h2>
+          <div class="map-placeholder">
+            <div class="map-orb"></div>
+            <p class="map-placeholder-title">Google Maps</p>
+            <p class="map-placeholder-copy">若目前沒有地圖圖檔，這裡會保留高級感 placeholder 顯示區塊。</p>
+          </div>
+          <div class="map-copy">
+            <p id="map-description-line1">點擊下方按鈕即可開啟 Google 地圖導航。</p>
+            <p id="map-description-line2">建議提早出發，預留交通與停車時間。</p>
+          </div>
+          <button class="primary-button" id="map-button" type="button">開啟 Google 地圖</button>
+        </div>
+      </section>
+
+      <section class="section countdown-section is-visible" id="countdown">
+        <div class="section-card countdown-card reveal is-visible">
+          <div class="media-frame countdown-photo">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo3.jpg" alt="婚禮倒數照片">
+            <div class="media-placeholder">
+              <p class="placeholder-label">COUNTDOWN</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+          <div class="countdown-copy">
+            <p class="section-english">COUNTDOWN</p>
+            <h2 class="section-title">距離婚禮還有</h2>
+            <div class="countdown-grid" id="countdown-grid">
+              <div class="countdown-item"><strong id="countdown-days">0</strong><span>天</span></div>
+              <div class="countdown-item"><strong id="countdown-hours">0</strong><span>時</span></div>
+              <div class="countdown-item"><strong id="countdown-minutes">0</strong><span>分</span></div>
+              <div class="countdown-item"><strong id="countdown-seconds">0</strong><span>秒</span></div>
+            </div>
+            <p class="countdown-finished" id="countdown-finished" hidden>今天是我們的大日子</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section thanks-section is-visible" id="thanks">
+        <div class="section-card thanks-card reveal is-visible">
+          <div class="media-frame thanks-photo">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/cover.jpg" alt="感謝頁照片">
+            <div class="media-placeholder">
+              <p class="placeholder-label">THANK YOU</p>
+              <p class="placeholder-copy">請確認照片路徑是否正確。</p>
+            </div>
+          </div>
+          <div class="thanks-copy">
+            <p>感謝您抽出寶貴的時間</p>
+            <p>與我們共同慶祝這特別的一天</p>
+            <p>非常榮幸能與您分享我們的愛情</p>
+            <p>誠摯邀請您參加我們的婚禮</p>
+            <p class="thanks-strong">我們婚禮見</p>
+          </div>
+          <div class="thanks-toast" aria-hidden="true">🥂</div>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script id="embedded-wedding-data" type="application/json">
     {
       "groom": "景翔",
       "bride": "佳柔",
-      "hero_message": "誠摯邀請您蒞臨見證",
       "date": "2026-12-12",
-      "time": "12:00 開席",
-      "arrival_note": "建議 11:30 入場",
-      "venue": "桃園八德彭園",
-      "address": "334桃園市八德區介壽路一段728號3樓",
-      "map_link": "https://maps.app.goo.gl/kJ4QmBb84BgEKgTTA",
+      "hero_message": "誠摯邀請您蒞臨見證",
+      "venue": "桃園彭園會館",
+      "hall": "宴會廳待確認",
+      "time": "午宴｜迎賓入席 12:00",
+      "address": "桃園市桃園區中正路61號",
+      "parking": "請依現場停車資訊為準",
+      "map_link": "https://www.google.com/maps/search/?api=1&query=桃園彭園會館",
+      "english_quote": "I love you not for who you are,\nbut for who I am with you.",
+      "intro_lines": [
+        "我們在彼此的目光中",
+        "找到了歸屬的坐標",
+        "默契的微笑",
+        "手心傳來的溫度",
+        "成了序章中最動人的註腳"
+      ],
       "invitation_message": [
-        "感謝您一路以來的陪伴與祝福。",
-        "我們將於這一天攜手步入人生新的旅程，",
-        "誠摯邀請您蒞臨，與我們一同分享這份喜悅。"
+        "有些日子，適合藏進心裏，靜靜回味；",
+        "而有些日子，則該與最愛的人一同擁抱。"
       ],
       "map_description": [
         "點擊下方按鈕即可開啟 Google 地圖導航。",
@@ -134,7 +331,13 @@
         "現場提供地下停車位",
         "敬請準時入席"
       ],
-      "note": "敬請準時入席"
+      "countdown_target": "2026-12-12T12:00:00",
+      "photo_paths": {
+        "cover": "assets/photos/cover.jpg",
+        "photo1": "assets/photos/photo1.jpg",
+        "photo2": "assets/photos/photo2.jpg",
+        "photo3": "assets/photos/photo3.jpg"
+      }
     }
   </script>
 
