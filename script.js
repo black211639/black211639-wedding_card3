@@ -44,17 +44,19 @@ const state = {
   heroIntervalId: null,
   audioReady: true,
   audioActivated: false,
-  countdownId: null
+  countdownId: null,
+  introDismissed: false
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
+  document.body.classList.add("is-intro-active");
   const weddingInfo = await loadWeddingInfo();
   renderWeddingInfo(weddingInfo);
   setupHeroSlides();
   setupMediaFrames();
   setupMapButton(weddingInfo.map_link);
   setupMusicToggle();
-  setupPageInteractionForAudio();
+  setupIntroOverlay();
   setupRevealObserver();
   setupCountdown(weddingInfo.countdown_target || defaultWeddingInfo.countdown_target);
 });
@@ -270,28 +272,56 @@ function setupMusicToggle() {
   audio.addEventListener("play", () => updateMusicButton(true));
 }
 
-function setupPageInteractionForAudio() {
-  const audio = document.getElementById("bgm-audio");
+function setupIntroOverlay() {
+  const overlay = document.getElementById("intro-overlay");
+  const button = document.getElementById("intro-enter-button");
 
+  if (!overlay || !button) {
+    document.body.classList.remove("is-intro-active");
+    return;
+  }
+
+  button.addEventListener("click", handleIntroEnter, { once: true });
+}
+
+async function handleIntroEnter() {
+  dismissIntroOverlay();
+  await tryStartBackgroundMusic();
+}
+
+function dismissIntroOverlay() {
+  if (state.introDismissed) {
+    return;
+  }
+
+  state.introDismissed = true;
+  document.body.classList.remove("is-intro-active");
+
+  const overlay = document.getElementById("intro-overlay");
+  if (overlay) {
+    overlay.classList.add("is-hidden");
+    overlay.setAttribute("aria-hidden", "true");
+  }
+}
+
+async function tryStartBackgroundMusic() {
+  if (state.audioActivated || !state.audioReady) {
+    return;
+  }
+
+  state.audioActivated = true;
+
+  const audio = document.getElementById("bgm-audio");
   if (!audio) {
     return;
   }
 
-  const tryActivate = async () => {
-    if (!state.audioReady || state.audioActivated) {
-      return;
-    }
-
-    state.audioActivated = true;
-    try {
-      await audio.play();
-      updateMusicButton(true);
-    } catch {
-      state.audioActivated = false;
-    }
-  };
-
-  document.addEventListener("pointerdown", tryActivate, { once: true });
+  try {
+    await audio.play();
+    updateMusicButton(true);
+  } catch {
+    updateMusicButton(false);
+  }
 }
 
 function updateMusicButton(isPlaying) {

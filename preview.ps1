@@ -41,6 +41,12 @@ Write-Host "Preview URL: $url" -ForegroundColor Green
 Write-Host "Press Ctrl+C to stop the server." -ForegroundColor Yellow
 Write-Host ""
 
+try {
+  Start-Process $url *> $null
+} catch {
+  Write-Host "Could not open the browser automatically. Open $url manually." -ForegroundColor Yellow
+}
+
 if ($pythonCommand -eq "py") {
   & py -m http.server 8000
 } elseif ($pythonCommand -eq "python") {

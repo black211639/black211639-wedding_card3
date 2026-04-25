@@ -12,6 +12,20 @@
 </head>
 <body>
   <div class="site-shell">
+    <div class="intro-overlay" id="intro-overlay" aria-hidden="false">
+      <div class="intro-glow intro-glow-a"></div>
+      <div class="intro-glow intro-glow-b"></div>
+      <div class="intro-petal intro-petal-a" aria-hidden="true"></div>
+      <div class="intro-petal intro-petal-b" aria-hidden="true"></div>
+      <div class="intro-card">
+        <p class="intro-label">邀請您參加</p>
+        <h1 class="intro-title">景翔 &amp; 佳柔</h1>
+        <p class="intro-subtitle">Wedding Day</p>
+        <p class="intro-date">2026.12.12</p>
+        <button class="intro-button" id="intro-enter-button" type="button">點擊開啟</button>
+      </div>
+    </div>
+
     <button class="music-toggle" id="music-toggle" type="button" aria-label="播放背景音樂" aria-pressed="false">♫</button>
 
     <audio id="bgm-audio" preload="none" loop>
@@ -37,6 +51,10 @@
           <h1 class="hero-names reveal is-visible delay-5" id="hero-names">景翔 &amp; 佳柔</h1>
         </div>
         <div class="ornament ornament-heart" aria-hidden="true">♥</div>
+        <div class="hero-scroll-hint" aria-hidden="true">
+          <span>Scroll</span>
+          <span class="hero-scroll-arrow">↓</span>
+        </div>
       </section>
 
       <section class="section intro-section is-visible" id="intro">
