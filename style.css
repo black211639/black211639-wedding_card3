@@ -21,12 +21,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   font-family: "Noto Serif TC", serif;
   color: var(--text);
+  overflow-x: hidden;
   background:
     linear-gradient(180deg, rgba(255, 253, 249, 0.96), rgba(247, 242, 236, 0.98) 52%, rgba(255, 251, 246, 0.96)),
     radial-gradient(circle at 6% 86%, rgba(234, 212, 203, 0.28), transparent 25%);
@@ -68,6 +70,13 @@ img {
 
 button {
   font: inherit;
+  min-height: 44px;
+}
+
+p,
+li,
+span {
+  overflow-wrap: anywhere;
 }
 
 .intro-overlay {
@@ -214,6 +223,7 @@ button {
 
 .section {
   position: relative;
+  scroll-margin-top: 12px;
 }
 
 .section-card {
@@ -261,7 +271,7 @@ button {
 }
 
 .hero-slide {
-  background-position: center;
+  background-position: center 38%;
   background-size: cover;
   opacity: 0;
   transform: scale(1.05);
@@ -338,7 +348,7 @@ button {
 .hero-scroll-hint {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: max(18px, calc(env(safe-area-inset-bottom) + 14px));
   z-index: 2;
   transform: translateX(-50%);
   display: inline-flex;
@@ -372,24 +382,27 @@ button {
 
 .music-toggle {
   position: fixed;
-  top: 18px;
-  right: max(18px, env(safe-area-inset-right));
+  top: max(18px, calc(env(safe-area-inset-top) + 12px));
+  right: max(18px, calc(env(safe-area-inset-right) + 12px));
   z-index: 20;
-  width: 52px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   border: 0;
   border-radius: 999px;
   color: #fff8f1;
-  background: rgba(47, 42, 39, 0.72);
-  box-shadow: 0 10px 24px rgba(47, 42, 39, 0.12);
+  background: rgba(47, 42, 39, 0.62);
+  box-shadow:
+    0 12px 24px rgba(47, 42, 39, 0.14),
+    inset 0 0 0 1px rgba(255, 253, 249, 0.18);
+  backdrop-filter: blur(12px);
 }
 
 .music-toggle.is-playing {
-  animation: spinPulse 2.2s linear infinite;
+  animation: spinPulse 3s ease-in-out infinite;
 }
 
 .music-toggle.is-disabled {
-  opacity: 0.62;
+  opacity: 0.58;
   cursor: default;
 }
 
@@ -701,6 +714,7 @@ button {
 .info-value {
   margin: 0;
   line-height: 1.8;
+  overflow-wrap: anywhere;
 }
 
 .reminder-list {
@@ -847,7 +861,7 @@ button {
   50% { transform: translateX(-50%) translateY(-6px); }
 }
 
-@media (min-width: 760px) {
+@media (min-width: 769px) {
   .gallery-pair {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -857,93 +871,157 @@ button {
   }
 }
 
-@media (max-width: 759px) {
+@media (max-width: 768px) {
   html {
     scroll-snap-type: y proximity;
   }
 
   body {
     overscroll-behavior-y: contain;
+    width: 100%;
   }
 
   .site-shell {
-    width: min(calc(100% - 16px), var(--content-width));
-    padding-top: 8px;
+    width: min(calc(100% - 18px), var(--content-width));
+    padding-top: max(8px, env(safe-area-inset-top));
+    padding-bottom: max(42px, calc(env(safe-area-inset-bottom) + 28px));
   }
 
   .invitation {
-    gap: 22px;
+    gap: 24px;
     scroll-snap-type: y proximity;
   }
 
   .section {
     scroll-snap-align: start;
     scroll-snap-stop: normal;
+    min-width: 0;
   }
 
   .section-card {
-    border-radius: 22px;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(48, 43, 39, 0.05);
   }
 
   .intro-card {
     width: min(100%, 342px);
-    padding: 38px 24px 32px;
+    padding: 38px 24px 34px;
   }
 
   .intro-title {
-    font-size: clamp(2.45rem, 10vw, 3.15rem);
+    font-size: clamp(2.35rem, 9.6vw, 3.05rem);
   }
 
   .hero-section {
-    min-height: calc(100svh - 16px);
-    border-radius: 26px;
+    min-height: calc(100vh - 18px);
+    min-height: calc(100svh - 18px);
+    border-radius: 24px;
   }
 
   .hero-slide {
-    background-position: center top;
+    background-position: center 35%;
+    transform: scale(1.025);
   }
 
   .hero-content {
-    min-height: calc(100svh - 16px);
-    padding: 64px 22px 58px;
+    min-height: calc(100vh - 18px);
+    min-height: calc(100svh - 18px);
+    padding:
+      max(72px, calc(env(safe-area-inset-top) + 58px))
+      22px
+      max(78px, calc(env(safe-area-inset-bottom) + 70px));
   }
 
   .hero-line {
-    font-size: clamp(2.05rem, 9.2vw, 2.95rem);
-    letter-spacing: 0.18em;
+    font-size: clamp(1.82rem, 8.2vw, 2.7rem);
+    line-height: 1.02;
+    letter-spacing: 0.16em;
   }
 
   .hero-message {
-    max-width: 18em;
-    font-size: 0.88rem;
+    max-width: min(21em, 100%);
+    margin-top: 18px;
+    font-size: 0.9rem;
     line-height: 1.8;
+    letter-spacing: 0.12em;
   }
 
   .hero-date {
-    font-size: 0.94rem;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
   }
 
   .hero-names {
-    font-size: clamp(2.25rem, 10.4vw, 3.15rem);
-    letter-spacing: 0.035em;
+    font-size: clamp(2.18rem, 9.8vw, 3rem);
+    letter-spacing: 0.03em;
+    max-width: 100%;
+    overflow-wrap: normal;
+  }
+
+  .hero-scroll-hint {
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 16px));
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    opacity: 0.84;
   }
 
   .intro-names {
     font-size: clamp(2.15rem, 9.4vw, 2.85rem);
     letter-spacing: 0.035em;
+    overflow-wrap: normal;
   }
 
   .intro-script {
-    font-size: clamp(1.42rem, 6vw, 1.9rem);
+    font-size: clamp(1.34rem, 5.7vw, 1.78rem);
+  }
+
+  .split-card {
+    background: rgba(255, 253, 249, 0.9);
+  }
+
+  .split-copy {
+    padding: 28px 22px 32px;
+  }
+
+  .invitation-card {
+    background: rgba(255, 253, 249, 0.88);
   }
 
   .split-media,
   .tall-frame {
-    min-height: 330px;
+    min-height: 332px;
+  }
+
+  .media-frame {
+    border-radius: 18px;
+    box-shadow: 0 10px 22px rgba(48, 43, 39, 0.045);
+  }
+
+  .media-frame img {
+    object-position: center center;
+  }
+
+  .media-frame.is-visible img {
+    transform: scale(1.01);
+  }
+
+  .oval-photo {
+    width: min(100%, 318px);
+    margin-top: 24px;
+  }
+
+  .wide-frame {
+    min-height: 238px;
   }
 
   .calendar-photo {
-    min-height: 540px;
+    min-height: 520px;
+  }
+
+  .countdown-photo,
+  .thanks-photo {
+    min-height: 260px;
   }
 
   .info-card,
@@ -951,20 +1029,91 @@ button {
   .countdown-card,
   .thanks-card,
   .invitation-card {
-    padding: 30px 20px;
+    padding: 30px 20px 32px;
+  }
+
+  .info-list {
+    margin-top: 22px;
+    gap: 10px;
+  }
+
+  .info-item {
+    padding: 16px 16px 17px;
+    text-align: left;
+    background: rgba(255, 253, 249, 0.62);
+  }
+
+  .info-label {
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+  }
+
+  .info-value {
+    font-size: 0.98rem;
+    line-height: 1.78;
+  }
+
+  .map-placeholder {
+    padding: 24px 18px;
+  }
+
+  .primary-button {
+    min-height: 52px;
+  }
+
+  .countdown-grid {
+    gap: 6px;
+  }
+
+  .countdown-item {
+    min-width: 0;
+    padding: 15px 4px;
+    border-radius: 12px;
   }
 
   .countdown-item strong {
-    font-size: clamp(1.28rem, 6vw, 1.6rem);
+    font-size: clamp(1.18rem, 5.6vw, 1.48rem);
+    line-height: 1.1;
   }
 
   .countdown-item span {
-    font-size: 0.78rem;
+    margin-top: 5px;
+    font-size: 0.74rem;
   }
 
   .music-toggle {
-    top: 12px;
-    right: 12px;
+    top: max(12px, calc(env(safe-area-inset-top) + 10px));
+    right: max(12px, calc(env(safe-area-inset-right) + 10px));
+    width: 44px;
+    height: 44px;
+    font-size: 0.98rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .site-shell {
+    width: min(calc(100% - 14px), var(--content-width));
+  }
+
+  .hero-content {
+    padding-inline: 20px;
+  }
+
+  .hero-names {
+    font-size: clamp(2.04rem, 9.4vw, 2.72rem);
+  }
+
+  .countdown-grid {
+    gap: 5px;
+  }
+
+  .countdown-item {
+    padding-inline: 3px;
+  }
+
+  .countdown-item strong {
+    font-size: clamp(1.1rem, 5.2vw, 1.36rem);
   }
 }
 

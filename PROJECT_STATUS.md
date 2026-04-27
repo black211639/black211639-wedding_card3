@@ -137,6 +137,22 @@ GitHub Pages 設定頁：
 - 未修改 `preview.bat`、`preview.ps1`、`publish.bat`、`publish.ps1`
 - 未刪除 `assets/`、`.nojekyll` 或 GitHub Pages 必要檔案
 
+## 第四優先資訊修正版 v1
+
+- 已將婚宴地點修正為彭員婚宴八德館
+- 已將地址修正為桃園市八德區介壽路一段728號3樓
+- 已同步更新 `wedding_info.json` 與 `embedded-wedding-data`
+- 已確認不再使用前一版舊地點與舊地址資料
+
+## 第五優先：手機版與 H5 滑動體驗優化 v1
+
+- 已優化手機版 scroll snap
+- 已優化 hero 首屏高度與文字層級
+- 已優化 section 間距與手機閱讀節奏
+- 已優化照片容器與資訊區可讀性
+- 已保留原有互動功能
+- 下一階段建議進入第六優先：照片展示與婚紗素材質感優化
+
 ## 下次修改時要先確認的事情
 
 - GitHub repository 是否仍是：

@@ -2,33 +2,32 @@ const defaultWeddingInfo = {
   groom: "景翔",
   bride: "佳柔",
   date: "2026-12-12",
-  hero_message: "誠摯邀請您蒞臨我們的婚禮",
-  venue: "桃園彭園會館",
-  hall: "彭園會館 桃園館宴會廳",
-  time: "午宴｜11:30 迎賓｜12:00 開席",
-  address: "桃園市桃園區中正路61號",
-  parking: "會館周邊設有停車場，建議提早抵達並依現場指引停放",
-  map_link: "https://www.google.com/maps/search/?api=1&query=桃園彭園會館",
-  english_quote: "To love, to cherish,\nand to walk every season together.",
+  hero_message: "誠摯邀請您蒞臨見證我們的重要時刻",
+  venue: "彭員婚宴八德館",
+  hall: "宴會廳資訊將於婚禮前另行告知",
+  time: "午宴｜迎賓入席 12:00｜準時開席",
+  address: "桃園市八德區介壽路一段728號3樓",
+  parking: "會館周邊設有停車資訊，建議賓客提早抵達",
+  map_link: "https://www.google.com/maps/search/?api=1&query=彭員婚宴八德館 桃園市八德區介壽路一段728號3樓",
+  english_quote: "Together is our favorite place to be.",
   intro_lines: [
-    "在相遇之後的每一天",
-    "我們把平凡日子過成溫柔風景",
-    "謝謝彼此的陪伴與理解",
-    "也謝謝一路祝福我們的你",
-    "誠摯邀請您一同見證這份約定"
+    "一路走來，謝謝彼此相伴",
+    "在這個重要的日子裡",
+    "我們誠摯邀請您蒞臨",
+    "與我們一同分享這份喜悅"
   ],
   invitation_message: [
-    "我們將在這一天，牽起彼此的手，走向人生新的篇章。",
-    "誠摯邀請您撥冗蒞臨，與我們共享這份喜悅與祝福。"
+    "有些幸福，因為被見證而更加完整；",
+    "有些時刻，因為有您在場而更加珍貴。"
   ],
   map_description: [
     "點擊下方按鈕即可開啟 Google 地圖導航。",
     "建議提早出發，預留交通與停車時間。"
   ],
   reminders: [
-    "敬請於開席前 10 至 15 分鐘抵達會場",
-    "開車賓客請預留交通與停車時間",
-    "若有任何行程調整，將以新人通知為準"
+    "建議提前 10 至 15 分鐘抵達會場",
+    "請依現場人員指引入席",
+    "敬請準時入席，一同分享我們的重要時刻"
   ],
   countdown_target: "2026-12-12T12:00:00",
   photo_paths: {
