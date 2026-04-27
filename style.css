@@ -258,9 +258,9 @@ span {
   min-height: min(94vh, 980px);
   border-radius: 28px;
   overflow: hidden;
-  background: #eee3dc;
+  background: #ece2da;
   border: 1px solid var(--border);
-  box-shadow: 0 18px 38px rgba(48, 43, 39, 0.08);
+  box-shadow: 0 18px 38px rgba(48, 43, 39, 0.075);
 }
 
 .hero-media,
@@ -274,7 +274,7 @@ span {
   background-position: center 38%;
   background-size: cover;
   opacity: 0;
-  transform: scale(1.05);
+  transform: scale(1.035);
   transition:
     opacity 1.4s ease,
     transform 7s ease;
@@ -287,8 +287,9 @@ span {
 
 .hero-overlay {
   background:
-    linear-gradient(180deg, rgba(28, 23, 20, 0.08), rgba(28, 23, 20, 0.1) 38%, rgba(28, 23, 20, 0.44)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+    radial-gradient(ellipse at center, rgba(255, 251, 246, 0.03) 0%, rgba(28, 23, 20, 0.12) 100%),
+    linear-gradient(180deg, rgba(255, 251, 246, 0.12), rgba(28, 23, 20, 0.08) 42%, rgba(28, 23, 20, 0.34)),
+    linear-gradient(90deg, rgba(28, 23, 20, 0.12), rgba(28, 23, 20, 0.02) 36%, rgba(28, 23, 20, 0.08));
   z-index: 1;
 }
 
@@ -301,6 +302,7 @@ span {
   flex-direction: column;
   justify-content: flex-end;
   color: #fff8f1;
+  background: linear-gradient(180deg, transparent 54%, rgba(28, 23, 20, 0.08));
 }
 
 .hero-english,
@@ -513,51 +515,67 @@ span {
 .gallery-grid,
 .chinese-gallery {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .gallery-pair {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .gallery-divider {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--red);
-  font-size: 1.2rem;
-  min-height: 24px;
-  animation: floaty 4.6s ease-in-out infinite;
+  color: rgba(159, 29, 45, 0.42);
+  font-size: 0.95rem;
+  min-height: 18px;
+  letter-spacing: 0.22em;
 }
 
 .media-frame {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(48, 43, 39, 0.08);
+  border: 1px solid rgba(48, 43, 39, 0.075);
   background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(246, 240, 234, 0.98));
   min-height: 220px;
-  box-shadow: 0 12px 26px rgba(48, 43, 39, 0.055);
+  box-shadow:
+    0 12px 24px rgba(48, 43, 39, 0.045),
+    inset 0 0 0 1px rgba(255, 253, 249, 0.42);
+}
+
+.media-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 249, 0.08), transparent 28%, rgba(48, 43, 39, 0.06)),
+    radial-gradient(ellipse at center, transparent 58%, rgba(48, 43, 39, 0.1));
+  opacity: 0.72;
 }
 
 .media-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   transition: transform 7s ease;
 }
 
 .media-frame.is-visible img {
-  transform: scale(1.025);
+  transform: scale(1.018);
 }
 
 .tall-frame {
-  min-height: 360px;
+  min-height: 380px;
+  aspect-ratio: 4 / 5.6;
 }
 
 .wide-frame {
-  min-height: 250px;
+  min-height: 270px;
+  aspect-ratio: 4 / 3;
 }
 
 .media-placeholder {
@@ -584,6 +602,7 @@ span {
   margin: 0;
   font-family: "Playfair Display", serif;
   letter-spacing: 0.18em;
+  color: rgba(159, 29, 45, 0.72);
 }
 
 .placeholder-copy {
@@ -593,14 +612,15 @@ span {
 
 .calendar-photo {
   min-height: 560px;
+  border-radius: 24px;
 }
 
 .calendar-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(47, 42, 39, 0.1), rgba(47, 42, 39, 0.4)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+    linear-gradient(180deg, rgba(47, 42, 39, 0.08), rgba(47, 42, 39, 0.34)),
+    radial-gradient(ellipse at center, transparent 55%, rgba(47, 42, 39, 0.16));
 }
 
 .calendar-content {
@@ -682,7 +702,7 @@ span {
 }
 
 .ribbon-divider {
-  color: var(--gold);
+  color: rgba(185, 148, 95, 0.54);
 }
 
 .info-card {
@@ -864,6 +884,11 @@ span {
 @media (min-width: 769px) {
   .gallery-pair {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .gallery-pair .media-frame:nth-child(2) {
+    margin-top: 42px;
   }
 
   .split-card {
@@ -919,8 +944,14 @@ span {
   }
 
   .hero-slide {
-    background-position: center 35%;
-    transform: scale(1.025);
+    background-position: center 34%;
+    transform: scale(1.015);
+  }
+
+  .hero-overlay {
+    background:
+      radial-gradient(ellipse at center, rgba(255, 251, 246, 0.03) 0%, rgba(28, 23, 20, 0.1) 100%),
+      linear-gradient(180deg, rgba(255, 251, 246, 0.1), rgba(28, 23, 20, 0.06) 42%, rgba(28, 23, 20, 0.34));
   }
 
   .hero-content {
@@ -990,12 +1021,12 @@ span {
 
   .split-media,
   .tall-frame {
-    min-height: 332px;
+    min-height: 324px;
   }
 
   .media-frame {
-    border-radius: 18px;
-    box-shadow: 0 10px 22px rgba(48, 43, 39, 0.045);
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(48, 43, 39, 0.04);
   }
 
   .media-frame img {
@@ -1003,25 +1034,63 @@ span {
   }
 
   .media-frame.is-visible img {
-    transform: scale(1.01);
+    transform: scale(1.006);
   }
 
   .oval-photo {
     width: min(100%, 318px);
     margin-top: 24px;
+    border-radius: 44% / 35%;
+  }
+
+  .gallery-section .gallery-head {
+    padding: 0 10px;
+  }
+
+  .gallery-grid,
+  .gallery-pair {
+    gap: 14px;
+  }
+
+  .gallery-divider {
+    min-height: 12px;
+    font-size: 0.76rem;
+    opacity: 0.68;
+  }
+
+  .tall-frame {
+    aspect-ratio: 4 / 5.35;
   }
 
   .wide-frame {
-    min-height: 238px;
+    min-height: 248px;
+    aspect-ratio: 4 / 3.2;
+  }
+
+  .chinese-gallery {
+    gap: 13px;
+  }
+
+  .chinese-gallery .media-frame {
+    min-height: 258px;
+  }
+
+  .chinese-gallery .media-frame img {
+    object-position: center 42%;
+  }
+
+  .ribbon-divider {
+    min-height: 10px;
   }
 
   .calendar-photo {
     min-height: 520px;
+    border-radius: 18px;
   }
 
   .countdown-photo,
   .thanks-photo {
-    min-height: 260px;
+    min-height: 248px;
   }
 
   .info-card,
