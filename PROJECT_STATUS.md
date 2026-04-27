@@ -27,6 +27,12 @@ GitHub Pages 設定頁：
 - GitHub 上已經有初版內容
 - GitHub Pages 已開始作為目前主要部署方向
 - 專案目前只保留 GitHub Pages 版本
+- 已完成「正式版視覺與體驗優化 v1」
+- 已新增 `AGENTS.md`，作為後續 AI 或工程接手規範
+- 已新增 `TASK_SPEC.md`，記錄本次正式版優化需求與驗收標準
+- 已優化 `wedding_info.json` 正式版婚禮文案
+- 已優化手機版首屏、開場視覺、照片展示、婚禮資訊、地圖與倒數區
+- GitHub Pages 部署方式維持不變，仍以根目錄靜態檔案部署
 
 ## 目前主要檔案
 
@@ -51,6 +57,12 @@ GitHub Pages 設定頁：
 
 - `DEPLOY_GITHUB_PAGES.md`
   GitHub Pages 部署教學
+
+- `AGENTS.md`
+  後續維護與 AI 接手規範
+
+- `TASK_SPEC.md`
+  本次正式版視覺與體驗優化 v1 任務規格
 
 - `publish.ps1`
   一鍵提交並上傳到 GitHub 的腳本
@@ -104,6 +116,26 @@ GitHub Pages 設定頁：
    - `index.html`
    - `style.css`
    - `script.js`
+
+## 2026-04-27 正式版視覺與體驗優化 v1
+
+本次完成項目：
+
+- 新增 `AGENTS.md`
+- 新增 `TASK_SPEC.md`
+- 優化 `wedding_info.json`，將測試感文案調整為正式婚禮邀請文案
+- 同步更新 `index.html` 內嵌備援資料，避免 JSON 載入失敗時顯示舊文案
+- 同步更新 `script.js` 預設資料，保留既有載入、倒數、地圖、音樂與輪播邏輯
+- 優化手機版首屏與開場畫面，讓 hero 更接近正式 H5 喜帖
+- 優化照片容器、婚禮資訊區、地圖區、倒數區的正式感
+- 手機版加入 scroll snap 體驗，並強化新人姓名不換行設定
+- 保留 GitHub Pages 既有部署方式與必要檔案
+
+本次未變更：
+
+- 未新增 Node.js、React、Vue 或大型框架
+- 未修改 `preview.bat`、`preview.ps1`、`publish.bat`、`publish.ps1`
+- 未刪除 `assets/`、`.nojekyll` 或 GitHub Pages 必要檔案
 
 ## 下次修改時要先確認的事情
 
