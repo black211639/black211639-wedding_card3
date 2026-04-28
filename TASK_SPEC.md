@@ -2,65 +2,56 @@
 
 ## 任務名稱
 
-正式版視覺與體驗優化 v1
+AI 可讀取維護結構重整 v1
 
 ## 任務目標
 
-將 `wedding_card2` 從可用版整理成適合正式傳給賓客觀看的 H5 婚禮電子喜帖。修改範圍以視覺、手機體驗與正式文案為主，不重寫架構，不破壞既有功能與 GitHub Pages 部署方式。
+讓 `wedding_card2` 專案具備清楚的 AI / CLI 接手文件、任務文件、技能規範與驗收流程，方便未來持續優化電子喜帖。
 
-## 本次任務內容
+## 任務範圍
 
-1. 優化手機版首屏
-   - Hero 區塊更接近正式 H5 喜帖。
-   - 日期、邀請文案、新人姓名層級更清楚。
-   - 新人姓名在 390px 手機寬度不可換行。
+- 新增 `docs/`
+- 新增 `skills/`
+- 新增 `tasks/`
+- 補強 `AGENTS.md`
+- 補強 `README.md`
+- 補強 `PROJECT_STATUS.md`
 
-2. 優化開場動畫
-   - 保留 `intro-overlay` 與既有進入流程。
-   - 視覺更精緻、柔和、克制。
-   - 減少過度裝飾與廉價感。
+## 本次不做
 
-3. 優化版面節奏
-   - Section 之間保留呼吸感。
-   - 文字區、照片區、資訊區有明確節奏差異。
-   - 手機版加入接近 H5 翻頁感的 scroll snap 體驗。
-
-4. 優化照片呈現
-   - 圖片容器更乾淨，更像婚紗展示。
-   - 保持圖片不變形。
-   - 降低過度圓角、厚重陰影與花俏裝飾。
-
-5. 優化婚禮資訊區
-   - 日期、地點、宴會廳、時間、地址、停車資訊更正式。
-   - 資訊卡片不做成生硬表格，而是保留請帖感。
-
-6. 優化地圖區
-   - 保留 `map-button` 與 `map_link` 功能。
-   - 地圖區視覺更像正式交通資訊卡。
-   - 按鈕文案可調整為更直接的導航語氣。
-
-7. 優化倒數區
-   - 保留 `countdown-grid` 與動態倒數。
-   - 數字呈現更有儀式感，避免工具網站感。
-
-8. 保留既有功能
-   - 不破壞 `wedding_info.json` fetch。
-   - 不破壞開場、音樂、輪播、地圖按鈕、倒數。
-   - 不使用 Node.js、React 或大型框架。
+- 不重寫首頁
+- 不重寫 CSS
+- 不重寫 JS
+- 不更換照片
+- 不改 GitHub Pages 部署方式
+- 不新增 Node.js / React / Vue
+- 不新增 build 流程
 
 ## 驗收標準
 
-1. `preview.bat` 可正常啟動本機預覽。
-2. `http://127.0.0.1:8000` 可開啟頁面。
-3. GitHub Pages 必要檔案完整：
-   - `index.html`
-   - `style.css`
-   - `script.js`
-   - `wedding_info.json`
-   - `assets/`
-   - `.nojekyll`
-4. 手機寬度 390px 不爆版。
-5. 新人姓名不換行。
-6. 倒數正常更新。
-7. 地圖按鈕可開啟 Google Maps。
-8. 整體視覺比原版更正式、高級、溫柔、有婚禮感。
+- 所有新增文件存在
+- `AGENTS.md` 可作為 AI 接手總規範
+- `README.md` 一般人可讀
+- `docs/` 有完整維護流程
+- `skills/` 有明確技能規範
+- `tasks/` 有任務拆解與下一步
+- 原網站核心檔案不被破壞
+- GitHub Pages 必要檔案仍存在
+
+## 核心保護清單
+
+本任務不得改壞以下檔案與機制：
+
+- `index.html`
+- `style.css`
+- `script.js`
+- `wedding_info.json`
+- `assets/`
+- `.nojekyll`
+- `wedding_info.json` fetch
+- `embedded-wedding-data` 備援資料
+- `intro-overlay`
+- `music-toggle`
+- `map-button`
+- `countdown-grid`
+- `data-hero-slide`

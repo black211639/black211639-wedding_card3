@@ -1,48 +1,120 @@
-# 婚禮電子喜帖
+# wedding_card2 婚禮電子喜帖
 
-註記：此版本為 `wedding_card2` H5 改版測試版。
+這是一個手機優先的婚禮電子喜帖 H5 網站，用來發給已確定會參加婚禮的賓客觀看。專案使用純 HTML、CSS、JavaScript，不需要 Node.js，也不需要安裝套件。
 
-這個專案是純 `HTML / CSS / JavaScript` 靜態網站，不需要安裝 Node.js 或額外套件。
-任何一台 Windows 電腦只要有 `Git` 和 `Python 3`，而且 PowerShell 可使用 `py` 或 `python`，就可以編輯、預覽、發布。
+## 婚禮資訊
 
-## 專案結構
+- 新郎：景翔
+- 新娘：佳柔
+- 日期：2026-12-12
+- 形式：午宴
+- 地點：彭員婚宴八德館
+- 地址：桃園市八德區介壽路一段728號3樓
 
-- `index.html`：頁面結構與內嵌備援資料
-- `style.css`：版面與樣式
-- `script.js`：讀取資料、套用內容、輪播互動
-- `wedding_info.json`：婚禮資訊主資料檔
-- `assets/photos/`：封面與婚紗照
-- `preview.ps1` / `preview.bat`：本機預覽
-- `publish.ps1` / `publish.bat`：提交並推送到 GitHub
+## 如何本機預覽
 
-## 在任何 Windows 電腦怎麼使用
+不要直接雙擊 `index.html`。網站會讀取 `wedding_info.json`，直接打開 HTML 可能造成瀏覽器阻擋 JSON 讀取。
 
-1. 修改 `wedding_info.json`
-2. 把照片放到 `assets/photos/`
-3. 本機預覽：
-   - 雙擊 `preview.bat`
-   - 或在 PowerShell 執行 `.\preview.ps1`
-4. 開瀏覽器進入 `http://127.0.0.1:8000`
-5. 要發布到 GitHub 時，再執行 `publish.bat` 或 `publish.ps1`
+建議方式：
 
-## 為什麼要用 preview
+1. 雙擊 `preview.bat`
+2. 或在 PowerShell 執行：
 
-`script.js` 會讀取 `wedding_info.json`。
-如果直接雙擊 `index.html`，瀏覽器通常會擋掉本機 `fetch`，畫面就可能只顯示 `index.html` 裡的內嵌備援資料，而不是你剛改過的 JSON。
+```powershell
+.\preview.ps1
+```
 
-`preview.ps1` 會用 Python 內建的 `http.server` 啟動本機伺服器，這樣資料讀取就會正常。
+3. 開啟：
 
-## 目前已確認的環境條件
+```text
+http://127.0.0.1:8000
+```
 
-- `Git` 可正常使用
-- 這個 repo 的 `origin` 已指向 GitHub
-- `publish.ps1` 會先檢查 GitHub 遠端連線
-- 本機預覽需要 `Python 3`，且 PowerShell 可使用 `py` 或 `python`
+## 如何修改婚禮資料
 
-## 發布到 GitHub Pages
+主要資料在 `wedding_info.json`：
 
-1. 確認內容修改完成
-2. 執行 `publish.bat` 或 `publish.ps1`
-3. 輸入 commit message，或直接按 Enter 使用預設訊息
-4. 等待 `git push origin main` 完成
-5. GitHub Pages 幾分鐘後會更新
+- 新郎、新娘姓名
+- 日期與倒數時間
+- 婚禮地點、地址、宴會廳
+- Google Maps 連結
+- 邀請文案與提醒事項
+- 照片路徑
+
+修改後請用本機預覽確認畫面正常。
+
+## 如何替換照片
+
+照片放在：
+
+```text
+assets/photos/
+```
+
+建議優先替換同名檔案，避免改程式：
+
+- `cover.jpg`：首頁 Hero 主視覺
+- `photo1.jpg`：故事或介紹段落
+- `photo2.jpg`：故事或回憶段落
+- `photo3.jpg`：結尾、倒數或輔助照片
+
+更多照片使用規範請看 `docs/PHOTO_USAGE_GUIDE.md`。
+
+## 如何發布到 GitHub Pages
+
+發布前先本機預覽確認沒問題。
+
+執行：
+
+```powershell
+.\publish.ps1
+```
+
+或雙擊：
+
+```text
+publish.bat
+```
+
+GitHub Pages 使用根目錄部署，必要檔案包含：
+
+- `index.html`
+- `style.css`
+- `script.js`
+- `wedding_info.json`
+- `assets/`
+- `.nojekyll`
+
+發布後 GitHub Pages 可能需要等待幾分鐘才會更新。
+
+## 常見問題
+
+- 頁面資料沒出現：請用 `preview.bat` 或 `preview.ps1`，不要直接打開 `index.html`。
+- 圖片沒出現：確認照片是否在 `assets/photos/`，檔名大小寫是否一致。
+- GitHub Pages 沒更新：等待幾分鐘，清除瀏覽器快取，並檢查 GitHub Pages 狀態。
+- 音樂沒有自動播放：手機瀏覽器通常需要使用者點擊後才允許播放，這是正常限制。
+- 手機畫面爆版：請用 390px 寬度檢查，尤其是新人姓名、資訊卡與倒數區。
+
+## AI / CLI 維護文件
+
+給 AI Agent 或 Codex CLI 接手時，請先讀：
+
+- `AGENTS.md`
+- `PROJECT_STATUS.md`
+- `TASK_SPEC.md`
+- `docs/CHECKLIST_BEFORE_EDIT.md`
+- `docs/CHECKLIST_AFTER_EDIT.md`
+
+文件結構：
+
+- `docs/`：專案說明、檔案地圖、驗收、部署、照片規範
+- `skills/`：AI 修改前端、視覺、文案、部署、照片、除錯的技能規範
+- `tasks/`：目前狀態、本次任務、下一步任務草案
+
+## 下一步可以怎麼改
+
+- 替換正式婚紗照
+- 強化首頁 Hero 首屏
+- 優化照片故事段落
+- 讓倒數區與婚禮資訊更有儀式感
+- 檢查 GitHub Pages 手機版實際觀看效果

@@ -1,78 +1,32 @@
-# wedding_card 專案目前狀態
+# PROJECT_STATUS.md
 
-註記：此版本為 `wedding_card2` H5 改版測試版。
+## 專案概況
 
-這份文件是這個專案的工作紀錄。
+- 專案名稱：`wedding_card2`
+- 專案類型：婚禮電子喜帖 H5 靜態網站
+- 技術：純 HTML / CSS / JavaScript
+- 部署：GitHub Pages 根目錄部署
+- 目前婚禮資料：景翔與佳柔，2026-12-12 午宴，彭員婚宴八德館
 
-之後如果要繼續修改 `wedding_card`，請先看這份，再從這裡接著做。
+## 目前核心功能
 
-## 目前專案位置
+- 開場 overlay
+- 背景音樂控制按鈕
+- Hero 首屏與照片輪播
+- 照片故事段落
+- 中式婚禮意象段落
+- 婚禮資訊卡
+- Google Maps 導航按鈕
+- 當日提醒
+- 婚禮倒數
+- 感謝結尾
+- `wedding_info.json` 資料讀取
+- `embedded-wedding-data` 內嵌備援資料
+- 圖片失敗 placeholder
 
-本機路徑：
+## GitHub Pages 狀態
 
-`C:\Users\ROU\Desktop\my_code\wedding_card2`
-
-GitHub repository：
-
-`https://github.com/black211639/wedding_card`
-
-GitHub Pages 設定頁：
-
-`https://github.com/black211639/wedding_card/settings/pages`
-
-## 目前已知狀態
-
-- 專案已建立初版婚禮電子喜帖網站
-- 專案為純靜態網站，可部署到 GitHub Pages
-- GitHub 上已經有初版內容
-- GitHub Pages 已開始作為目前主要部署方向
-- 專案目前只保留 GitHub Pages 版本
-- 已完成「正式版視覺與體驗優化 v1」
-- 已新增 `AGENTS.md`，作為後續 AI 或工程接手規範
-- 已新增 `TASK_SPEC.md`，記錄本次正式版優化需求與驗收標準
-- 已優化 `wedding_info.json` 正式版婚禮文案
-- 已優化手機版首屏、開場視覺、照片展示、婚禮資訊、地圖與倒數區
-- GitHub Pages 部署方式維持不變，仍以根目錄靜態檔案部署
-
-## 目前主要檔案
-
-- `index.html`
-  網站主頁，GitHub Pages 主要入口
-
-- `style.css`
-  網站版面與視覺樣式
-
-- `script.js`
-  網頁互動功能，包含：
-  - 婚禮資訊載入
-  - 照片輪播
-  - 地圖按鈕
-  - 淡入動畫
-
-- `wedding_info.json`
-  婚禮資訊主資料
-
-- `assets/photos/`
-  封面圖與輪播照片
-
-- `DEPLOY_GITHUB_PAGES.md`
-  GitHub Pages 部署教學
-
-- `AGENTS.md`
-  後續維護與 AI 接手規範
-
-- `TASK_SPEC.md`
-  本次正式版視覺與體驗優化 v1 任務規格
-
-- `publish.ps1`
-  一鍵提交並上傳到 GitHub 的腳本
-
-- `publish.bat`
-  可直接雙擊執行的上傳入口
-
-## GitHub Pages 目前使用原則
-
-目前 GitHub Pages 版本應以這些檔案為主：
+根目錄部署必要檔案仍維持：
 
 - `index.html`
 - `style.css`
@@ -81,121 +35,62 @@ GitHub Pages 設定頁：
 - `assets/`
 - `.nojekyll`
 
-如果只要更新正式網站，優先改這幾個檔案即可。
+發布流程仍使用：
 
-## 最小必要檔案
-
-目前正式網站最小必要檔案如下：
-
-- `index.html`
-- `style.css`
-- `script.js`
-- `wedding_info.json`
-- `assets/`
-- `.nojekyll`
-
-本機管理用但非網站必要檔案：
-
-- `README.md`
-- `PROJECT_STATUS.md`
-- `DEPLOY_GITHUB_PAGES.md`
-- `publish.ps1`
 - `publish.bat`
+- `publish.ps1`
 
-## 下次修改時建議從哪裡開始
+本機預覽仍使用：
 
-如果要繼續改版，請照這個順序：
+- `preview.bat`
+- `preview.ps1`
 
-1. 先確認 GitHub Pages 上線網址是否正常
-2. 先看 `wedding_info.json` 是否要更新新人資料、地址、交通方式、地圖連結
-3. 再看 `assets/photos/` 是否要換成正式婚紗照
-4. 如果只是改內容，通常只需要改：
-   - `wedding_info.json`
-   - `assets/photos/`
-5. 如果是改版面或效果，再改：
-   - `index.html`
-   - `style.css`
-   - `script.js`
+## 2026-04-28 AI 可讀取維護結構重整 v1
 
-## 2026-04-27 正式版視覺與體驗優化 v1
+本次完成：
 
-本次完成項目：
+- 新增 `docs/` 文件群
+- 新增 `skills/` 技能群
+- 新增 `tasks/` 任務群
+- 補強 `AGENTS.md`
+- 補強 `README.md`
+- 更新 `TASK_SPEC.md`
+- 建立之後 Codex CLI / AI Agent 接手流程
+- 建立修改前後檢查清單
+- 建立照片素材使用規範
+- 建立 GitHub Pages 發布流程文件
+- 建立 QA 測試計畫
 
-- 新增 `AGENTS.md`
-- 新增 `TASK_SPEC.md`
-- 優化 `wedding_info.json`，將測試感文案調整為正式婚禮邀請文案
-- 同步更新 `index.html` 內嵌備援資料，避免 JSON 載入失敗時顯示舊文案
-- 同步更新 `script.js` 預設資料，保留既有載入、倒數、地圖、音樂與輪播邏輯
-- 優化手機版首屏與開場畫面，讓 hero 更接近正式 H5 喜帖
-- 優化照片容器、婚禮資訊區、地圖區、倒數區的正式感
-- 手機版加入 scroll snap 體驗，並強化新人姓名不換行設定
-- 保留 GitHub Pages 既有部署方式與必要檔案
+本次沒有做：
 
-本次未變更：
+- 沒有重寫網站主功能
+- 沒有大改 `index.html`
+- 沒有大改 `style.css`
+- 沒有大改 `script.js`
+- 沒有更換照片
+- 沒有改 GitHub Pages 部署方式
+- 沒有新增 Node.js / React / Vue / build 流程
 
-- 未新增 Node.js、React、Vue 或大型框架
-- 未修改 `preview.bat`、`preview.ps1`、`publish.bat`、`publish.ps1`
-- 未刪除 `assets/`、`.nojekyll` 或 GitHub Pages 必要檔案
+## 2026-04-27 既有進度摘要
 
-## 第四優先資訊修正版 v1
+早期紀錄顯示：
 
-- 已將婚宴地點修正為彭員婚宴八德館
-- 已將地址修正為桃園市八德區介壽路一段728號3樓
-- 已同步更新 `wedding_info.json` 與 `embedded-wedding-data`
-- 已確認不再使用前一版舊地點與舊地址資料
+- 專案已整理為 GitHub Pages 可部署的根目錄結構。
+- 已建立 `wedding_info.json` 作為婚禮資料主來源。
+- 已在 `index.html` 建立 `embedded-wedding-data` 作為資料備援。
+- 已在 `script.js` 建立資料讀取、輪播、音樂、地圖、倒數等功能。
+- 已完成主要 H5 婚禮喜帖段落與手機版視覺基礎。
+- 已建立預覽與發布腳本。
 
-## 第五優先：手機版與 H5 滑動體驗優化 v1
+## 目前已知限制
 
-- 已優化手機版 scroll snap
-- 已優化 hero 首屏高度與文字層級
-- 已優化 section 間距與手機閱讀節奏
-- 已優化照片容器與資訊區可讀性
-- 已保留原有互動功能
-- 下一階段建議進入第六優先：照片展示與婚紗素材質感優化
+- 正式婚紗照若尚未完全替換，需依 `docs/PHOTO_USAGE_GUIDE.md` 與 `tasks/003-photo-replacement-plan.md` 處理。
+- 手機 390px 寬度仍是後續視覺升級時的首要驗收尺寸。
+- 音樂自動播放受瀏覽器限制，需使用者互動後才可能播放。
+- GitHub Pages 更新可能有快取與部署延遲。
 
-## 第六優先：照片展示與婚紗素材質感優化 v1
+## 下一步建議
 
-- 已優化 hero 主視覺照片質感
-- 已優化 media-frame 照片框與裁切
-- 已優化 gallery-section 為婚紗照片精選展示
-- 已優化 chinese-gallery-section 為中式婚禮意象
-- 已保留原有照片路徑與 JS 載入邏輯
-- 下一階段建議進入第七優先：婚禮資訊區與地圖交通區正式化
-
-## 下次修改時要先確認的事情
-
-- GitHub repository 是否仍是：
-  `black211639/wedding_card`
-
-- GitHub Pages 是否仍使用：
-  `main` branch
-  `/ (root)`
-
-- `index.html` 是否仍為首頁入口
-
-- `assets/` 資料夾結構是否沒有被改壞
-
-## 目前可以優先改的內容
-
-目前最值得優先補完的通常會是：
-
-- `wedding_info.json` 裡的完整地址
-- `transport.mrt`
-- `transport.bus`
-- `map_link`
-- 正式婚紗照替換
-
-## 如果下次要請 AI 接手，建議直接貼這段
-
-請從這個專案繼續修改：
-
-- 本機路徑：`C:\Users\ROU\Desktop\my_code\wedding_card2`
-- GitHub repository：`https://github.com/black211639/wedding_card`
-- GitHub Pages 已經有初版
-- 請先看 `PROJECT_STATUS.md`
-- 以 GitHub Pages 版本為主繼續修改
-
-## 備註
-
-- `README.md` 已整理為 GitHub Pages 版本
-- `DEPLOY_GITHUB_PAGES.md` 已建立，可作為後續部署流程文件
+1. 依 `tasks/002-next-visual-upgrade.md` 做下一階段視覺升級。
+2. 依 `tasks/003-photo-replacement-plan.md` 替換正式婚紗照。
+3. 每次修改前後依 `docs/CHECKLIST_BEFORE_EDIT.md` 與 `docs/CHECKLIST_AFTER_EDIT.md` 驗收。
