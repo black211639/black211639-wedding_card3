@@ -15,6 +15,9 @@
   --radius-lg: 20px;
   --radius-md: 14px;
   --content-width: 620px;
+  --font-serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --font-sans: "Noto Sans TC", "Noto Serif TC", system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "Playfair Display", "Times New Roman", serif;
 }
 
 * {
@@ -28,12 +31,20 @@ html {
 
 body {
   margin: 0;
-  font-family: "Noto Serif TC", serif;
+  font-family: var(--font-sans);
+  font-weight: 400;
   color: var(--text);
   overflow-x: hidden;
   background:
     linear-gradient(180deg, rgba(255, 253, 249, 0.96), rgba(247, 242, 236, 0.98) 52%, rgba(255, 251, 246, 0.96)),
     radial-gradient(circle at 6% 86%, rgba(234, 212, 203, 0.28), transparent 25%);
+}
+
+h1,
+h2,
+h3,
+.section-title {
+  font-family: var(--font-serif);
 }
 
 body.is-intro-active {
@@ -621,6 +632,243 @@ span {
   color: rgba(255, 242, 213, 0.62);
   font-size: 0.76rem;
   letter-spacing: 0.12em;
+}
+
+/* Product-grade red-envelope intro upgrade. */
+.intro-overlay {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 239, 191, 0.18), transparent 20%),
+    radial-gradient(circle at 18% 18%, rgba(255, 226, 160, 0.14), transparent 28%),
+    radial-gradient(circle at 86% 74%, rgba(255, 210, 125, 0.12), transparent 28%),
+    linear-gradient(135deg, #260308 0%, #4d0710 32%, #8d1724 58%, #31050b 100%);
+  perspective: 1400px;
+}
+
+.intro-overlay::before {
+  inset: 14px;
+  border-color: rgba(243, 199, 118, 0.28);
+  background:
+    linear-gradient(90deg, rgba(255, 245, 218, 0.045) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 245, 218, 0.032) 1px, transparent 1px),
+    repeating-linear-gradient(38deg, rgba(255, 235, 190, 0.035) 0 1px, transparent 1px 18px);
+  background-size: 18px 18px, 18px 18px, auto;
+}
+
+.intro-overlay::after {
+  width: min(96vw, 620px);
+  height: min(96vw, 620px);
+  border-color: rgba(255, 220, 150, 0.14);
+  background: radial-gradient(circle, rgba(255, 235, 181, 0.12), transparent 62%);
+}
+
+.intro-stage {
+  width: min(100%, 480px);
+}
+
+.intro-stage .intro-label {
+  font-family: var(--font-serif);
+  color: rgba(255, 241, 212, 0.92);
+  font-weight: 500;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.2);
+}
+
+.intro-stage .intro-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.intro-envelope {
+  width: clamp(286px, 74vw, 410px);
+  height: clamp(232px, 58vw, 324px);
+  animation: envelopeBreath 3.8s ease-in-out infinite;
+}
+
+.intro-envelope::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 82%;
+  height: 24px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: rgba(16, 3, 5, 0.34);
+  filter: blur(13px);
+}
+
+.intro-envelope-back {
+  background:
+    linear-gradient(180deg, rgba(255, 227, 166, 0.12), transparent 30%),
+    linear-gradient(145deg, #5b0b13, #8d1b27 54%, #3a0710);
+  border-color: rgba(255, 221, 150, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 244, 216, 0.24),
+    inset 0 -14px 24px rgba(35, 4, 9, 0.22);
+}
+
+.intro-envelope-body {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 217, 143, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 230, 170, 0.1), transparent 38%),
+    linear-gradient(135deg, #7d111d, #b92b38 46%, #71121c);
+  border-color: rgba(255, 224, 158, 0.56);
+  box-shadow:
+    0 18px 34px rgba(15, 2, 5, 0.22),
+    inset 0 1px 0 rgba(255, 246, 218, 0.28),
+    inset 0 -18px 28px rgba(42, 5, 10, 0.24);
+}
+
+.intro-envelope-body::before {
+  background:
+    linear-gradient(31deg, transparent 49.3%, rgba(255, 224, 158, 0.42) 50%, transparent 50.8%),
+    linear-gradient(-31deg, transparent 49.3%, rgba(255, 224, 158, 0.34) 50%, transparent 50.8%),
+    linear-gradient(180deg, transparent 60%, rgba(76, 7, 16, 0.18));
+}
+
+.intro-envelope-body::after {
+  border-color: rgba(255, 225, 160, 0.42);
+  box-shadow: inset 0 0 0 1px rgba(89, 11, 18, 0.22);
+}
+
+.intro-envelope-flap {
+  background:
+    linear-gradient(180deg, rgba(255, 229, 167, 0.18), transparent 34%),
+    linear-gradient(140deg, #ca3a47, #8f1824 62%, #4b0a13);
+  border-color: rgba(255, 224, 158, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 246, 218, 0.24),
+    0 15px 22px rgba(25, 3, 7, 0.16);
+}
+
+.intro-envelope-flap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 54%;
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(255, 224, 158, 0.64), transparent);
+}
+
+.intro-envelope-seal {
+  width: 62px;
+  height: 62px;
+  color: #ffe7a4;
+  border-color: rgba(255, 228, 166, 0.74);
+  background:
+    radial-gradient(circle, rgba(255, 231, 166, 0.13), transparent 60%),
+    rgba(95, 12, 20, 0.36);
+  box-shadow:
+    0 0 24px rgba(255, 218, 140, 0.22),
+    inset 0 0 0 5px rgba(255, 224, 158, 0.08);
+}
+
+.intro-envelope-names,
+.intro-card-names,
+.hero-names,
+.intro-names,
+.thanks-strong {
+  font-family: var(--font-display);
+}
+
+.intro-envelope-title,
+.intro-envelope-date,
+.intro-card-date,
+.hero-english,
+.section-english,
+.thanks-label {
+  font-family: var(--font-display);
+}
+
+.intro-invitation-card {
+  width: 76%;
+  height: 66%;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.82), transparent 36%),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.99), rgba(247, 235, 213, 0.99)),
+    repeating-linear-gradient(90deg, rgba(185, 148, 95, 0.05) 0 1px, transparent 1px 10px);
+  border-color: rgba(192, 145, 75, 0.64);
+  box-shadow:
+    0 20px 34px rgba(13, 3, 5, 0.2),
+    inset 0 0 0 8px rgba(255, 253, 249, 0.68),
+    inset 0 0 0 9px rgba(185, 148, 95, 0.26);
+}
+
+.intro-opening .intro-envelope {
+  animation: envelopeTap 0.36s ease both;
+}
+
+.intro-opening .intro-envelope-body,
+.intro-opening .intro-envelope-flap {
+  filter: drop-shadow(0 0 14px rgba(255, 218, 133, 0.22));
+}
+
+.intro-opened .intro-envelope {
+  animation: none;
+}
+
+.intro-opened .intro-envelope-flap {
+  transform: translateX(-50%) rotateX(-170deg);
+  transition: transform 0.92s cubic-bezier(0.18, 0.76, 0.2, 1);
+}
+
+.intro-opened .intro-invitation-card {
+  animation: invitationPremiumReveal 1.58s 0.52s cubic-bezier(0.16, 0.84, 0.2, 1) forwards;
+}
+
+.intro-opened .intro-bloom {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.intro-hidden .intro-bloom {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(4.8);
+}
+
+.intro-hidden .intro-stage {
+  opacity: 0;
+  transform: translateY(-8px) scale(1.05);
+}
+
+.intro-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-bloom {
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  z-index: 1;
+  width: min(72vw, 360px);
+  height: min(72vw, 360px);
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.36);
+  background:
+    radial-gradient(circle, rgba(255, 250, 232, 0.92) 0 16%, rgba(255, 229, 169, 0.42) 34%, rgba(255, 229, 169, 0) 68%);
+  filter: blur(2px);
+  transition:
+    opacity 0.78s ease,
+    transform 1.35s cubic-bezier(0.18, 0.76, 0.2, 1);
+}
+
+.intro-sparkle {
+  background:
+    radial-gradient(circle, rgba(255, 239, 183, 0.86) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(255, 253, 249, 0.58) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(255, 214, 122, 0.42) 0 1px, transparent 2px);
+  background-size: 34px 34px, 57px 57px, 79px 79px;
+  opacity: 0.34;
+}
+
+.intro-opened .intro-sparkle {
+  animation: sparkleBurst 1.8s ease both;
 }
 
 body.is-intro-active .invitation {
@@ -1512,6 +1760,30 @@ body.is-intro-active .invitation {
   100% { transform: translateY(0) scale(1); }
 }
 
+@keyframes envelopeBreath {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotateX(1.5deg);
+  }
+}
+
+@keyframes envelopeTap {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  32% {
+    transform: translateY(5px) scale(0.982) rotateZ(-0.5deg);
+  }
+  58% {
+    transform: translateY(-2px) scale(1.01) rotateZ(0.6deg);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
 @keyframes invitationSlideOut {
   0% {
     transform: translateX(-50%) translateY(58px);
@@ -1524,6 +1796,24 @@ body.is-intro-active .invitation {
   }
 }
 
+@keyframes invitationPremiumReveal {
+  0% {
+    opacity: 0.98;
+    transform: translateX(-50%) translateY(58px) scale(1);
+  }
+  48% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-92px) scale(1);
+  }
+  74% {
+    transform: translateX(-50%) translateY(-84px) scale(1.045);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-82px) scale(1.075);
+  }
+}
+
 @keyframes sparkleDrift {
   0%, 100% {
     transform: translate3d(0, 0, 0);
@@ -1532,6 +1822,20 @@ body.is-intro-active .invitation {
   50% {
     transform: translate3d(0, -10px, 0);
     opacity: 0.36;
+  }
+}
+
+@keyframes sparkleBurst {
+  0% {
+    opacity: 0.28;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  42% {
+    opacity: 0.74;
+  }
+  100% {
+    opacity: 0.18;
+    transform: translate3d(0, -18px, 0) scale(1.18);
   }
 }
 
@@ -1983,6 +2287,7 @@ body.is-intro-active .invitation {
   .halo,
   .intro-stage,
   .intro-sparkle,
+  .intro-envelope,
   .thanks-toast,
   .music-toggle.is-playing {
     animation: none;
@@ -1997,5 +2302,13 @@ body.is-intro-active .invitation {
   .intro-opened .intro-invitation-card {
     animation: none;
     transform: translateX(-50%) translateY(-64px);
+  }
+
+  .intro-bloom {
+    transition: none;
+  }
+
+  .intro-hidden .intro-bloom {
+    transform: translate(-50%, -50%) scale(1.2);
   }
 }

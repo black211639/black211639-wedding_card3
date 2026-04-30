@@ -343,20 +343,24 @@ function dismissIntroOverlay() {
   const overlay = document.getElementById("intro-overlay");
   if (overlay) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    overlay.classList.add("intro-opened");
+    overlay.classList.add("intro-opening");
     overlay.setAttribute("aria-hidden", "true");
     overlay.querySelectorAll("button").forEach((button) => {
       button.disabled = true;
     });
 
     window.setTimeout(() => {
+      overlay.classList.add("intro-opened");
+    }, reduceMotion ? 40 : 280);
+
+    window.setTimeout(() => {
       document.body.classList.remove("is-intro-active");
-      overlay.classList.add("intro-dismissed", "is-hidden");
-    }, reduceMotion ? 420 : 2180);
+      overlay.classList.add("intro-hidden", "intro-dismissed", "is-hidden");
+    }, reduceMotion ? 420 : 2680);
 
     window.setTimeout(() => {
       overlay.remove();
-    }, reduceMotion ? 760 : 2960);
+    }, reduceMotion ? 760 : 3400);
     return;
   }
 

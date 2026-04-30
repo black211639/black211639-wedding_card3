@@ -4,7 +4,8 @@
 
 - 完成項目：新增全螢幕 intro overlay，使用紅酒色喜帖信封 / 紅包袋作為第一眼開場。
 - 修改檔案：`index.html`、`style.css`、`script.js`、`PROJECT_STATUS.md`、`tasks/004-intro-envelope-animation.md`。
-- 動畫內容：點擊後信封有觸碰下壓感，上蓋 flap 以 3D 旋轉翻開，內層暖白喜帖卡片滑出，最後 overlay 淡出並讓主頁 fade-in / slide-up。
+- 動畫內容：點擊後信封有觸碰下壓與發光感，上蓋 flap 以 3D 旋轉翻開，內層暖白喜帖卡片滑出並微放大，金粉與暖金光暈擴散後 overlay 淡出，主頁 fade-in / slide-up。
+- 字體系統：新增 `--font-serif`、`--font-sans`、`--font-display`，中文標題使用 Noto Serif TC，內文使用 Noto Sans TC，英文與姓名使用 Cormorant Garamond / Playfair Display fallback。
 - 音樂狀態：保留 `bgm-audio` 與 `music-toggle`，目前未放置音樂檔；預留建議位置為 `assets/audio/wedding-music.mp3`，不會因檔案不存在造成 console error。
 - 驗收重點：手機寬度下信封使用 `clamp()` 控制尺寸，並加入 `prefers-reduced-motion` 降級。
 
