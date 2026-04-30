@@ -3,12 +3,12 @@ const defaultWeddingInfo = {
   bride: "佳柔",
   date: "2026-12-12",
   hero_message: "誠摯邀請您蒞臨見證我們的重要時刻",
-  venue: "彭員婚宴八德館",
+  venue: "彭園婚宴八德館",
   hall: "宴會廳資訊將於婚禮前另行告知",
   time: "午宴｜迎賓入席 12:00｜準時開席",
   address: "桃園市八德區介壽路一段728號3樓",
   parking: "會館周邊設有停車資訊，建議賓客提早抵達",
-  map_link: "https://www.google.com/maps/search/?api=1&query=彭員婚宴八德館 桃園市八德區介壽路一段728號3樓",
+  map_link: "https://www.google.com/maps/search/?api=1&query=彭園婚宴八德館 桃園市八德區介壽路一段728號3樓",
   english_quote: "Together is our favorite place to be.",
   intro_lines: [
     "一路走來，謝謝彼此相伴",
@@ -179,8 +179,8 @@ function applyPhotoPaths(photoPaths) {
   const imageMap = [
     { selector: ".split-media img", src: photoPaths.photo1 },
     { selector: ".oval-photo img", src: photoPaths.photo2 },
-    { selector: ".gallery-pair .media-frame:nth-child(1) img", src: photoPaths.photo1 },
-    { selector: ".gallery-pair .media-frame:nth-child(2) img", src: photoPaths.photo2 },
+    { selector: ".story-card-primary .media-frame img", src: photoPaths.photo1 },
+    { selector: ".story-card-offset .media-frame img", src: photoPaths.photo2 },
     { selector: ".wide-frame img", src: photoPaths.photo3 },
     { selector: ".calendar-photo img", src: photoPaths.cover },
     { selector: ".countdown-photo img", src: photoPaths.photo3 },
@@ -259,6 +259,13 @@ function setupMusicToggle() {
     return;
   }
 
+  if (!hasPlayableAudioSource(audio)) {
+    state.audioReady = false;
+    setMusicUnavailableState(button);
+    updateMusicButton(false);
+    return;
+  }
+
   audio.addEventListener("error", () => {
     state.audioReady = false;
     setMusicUnavailableState(button);
@@ -300,10 +307,28 @@ function setupIntroOverlay() {
     return;
   }
 
-  button.addEventListener("click", handleIntroEnter, { once: true });
+  const openIntro = (event) => {
+    event?.preventDefault();
+    handleIntroEnter();
+  };
+
+  overlay.addEventListener("click", openIntro);
+  button.addEventListener("click", openIntro);
+  overlay.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      openIntro(event);
+    }
+  });
+
+  overlay.tabIndex = -1;
+  window.setTimeout(() => button.focus({ preventScroll: true }), 80);
 }
 
 async function handleIntroEnter() {
+  if (state.introDismissed) {
+    return;
+  }
+
   dismissIntroOverlay();
   await tryStartBackgroundMusic();
 }
@@ -314,13 +339,28 @@ function dismissIntroOverlay() {
   }
 
   state.introDismissed = true;
-  document.body.classList.remove("is-intro-active");
 
   const overlay = document.getElementById("intro-overlay");
   if (overlay) {
-    overlay.classList.add("is-hidden");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    overlay.classList.add("intro-opened");
     overlay.setAttribute("aria-hidden", "true");
+    overlay.querySelectorAll("button").forEach((button) => {
+      button.disabled = true;
+    });
+
+    window.setTimeout(() => {
+      document.body.classList.remove("is-intro-active");
+      overlay.classList.add("intro-dismissed", "is-hidden");
+    }, reduceMotion ? 420 : 2180);
+
+    window.setTimeout(() => {
+      overlay.remove();
+    }, reduceMotion ? 760 : 2960);
+    return;
   }
+
+  document.body.classList.remove("is-intro-active");
 }
 
 async function tryStartBackgroundMusic() {
@@ -332,6 +372,16 @@ async function tryStartBackgroundMusic() {
 
   const audio = document.getElementById("bgm-audio");
   if (!audio) {
+    return;
+  }
+
+  if (!hasPlayableAudioSource(audio)) {
+    state.audioReady = false;
+    const button = document.getElementById("music-toggle");
+    if (button) {
+      setMusicUnavailableState(button);
+    }
+    updateMusicButton(false);
     return;
   }
 
@@ -357,7 +407,11 @@ function updateMusicButton(isPlaying) {
 function setMusicUnavailableState(button) {
   button.classList.add("is-disabled");
   button.setAttribute("aria-label", "背景音樂目前不可用");
-  button.title = "找不到音樂檔案 assets/music/music.mp3";
+  button.title = "尚未放置音樂檔案，建議位置：assets/audio/wedding-music.mp3";
+}
+
+function hasPlayableAudioSource(audio) {
+  return Boolean(audio.currentSrc || audio.src || audio.querySelector("source[src]"));
 }
 
 function setupRevealObserver() {

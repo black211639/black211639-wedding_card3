@@ -2,6 +2,29 @@
 
 本檔記錄重要變更。詳細狀態可搭配 `PROJECT_STATUS.md` 查看。
 
+## 2026-04-28 第一優先視覺升級
+
+- 修改人 / 工具：Codex CLI
+- 修改目的：升級開場封面、Hero 首屏、照片故事段落與 Thank You 結尾，讓網站更像正式高級 H5 婚禮電子喜帖。
+- 修改檔案：
+  - `index.html`
+  - `style.css`
+  - `script.js`
+  - `docs/CHANGELOG.md`
+- 修改摘要：
+  - 開場 overlay 改為紙質封套卡片風格，保留 `intro-overlay` 與 `intro-enter-button`。
+  - Hero 改為海報式主視覺，調整照片遮罩、文字層級、留白與 scroll hint。
+  - 照片故事段落改為 Chapter 章節式排版，降低普通圖庫感。
+  - Thank You 區改為完整 ending page，使用既有照片作背景與正式收束文案。
+  - 更新 `script.js` 的照片 selector，確保 `wedding_info.json` 的照片路徑仍能套用到新章節結構。
+- 素材：
+  - 未新增網路素材。
+  - 僅使用既有 `assets/photos/` 照片。
+- 驗收結果：
+  - 待本機預覽與功能驗收。
+- 待處理項目：
+  - 建議人工確認正式照片在手機 390px 下的裁切位置。
+
 ## 2026-04-28
 
 - 修改人 / 工具：Codex CLI

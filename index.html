@@ -17,20 +17,39 @@
       <div class="intro-glow intro-glow-b"></div>
       <div class="intro-petal intro-petal-a" aria-hidden="true"></div>
       <div class="intro-petal intro-petal-b" aria-hidden="true"></div>
-      <div class="intro-card">
+      <div class="intro-sparkle intro-sparkle-a" aria-hidden="true"></div>
+      <div class="intro-sparkle intro-sparkle-b" aria-hidden="true"></div>
+      <div class="intro-stage" role="dialog" aria-modal="true" aria-labelledby="intro-heading" aria-describedby="intro-guide">
         <p class="intro-label">邀請您參加</p>
-        <h1 class="intro-title">景翔 &amp; 佳柔</h1>
-        <p class="intro-subtitle">Wedding Day</p>
-        <p class="intro-date">2026.12.12</p>
-        <button class="intro-button" id="intro-enter-button" type="button">點擊開啟</button>
+        <h1 class="intro-title" id="intro-heading">景翔 &amp; 佳柔<br><span>的婚禮</span></h1>
+        <div class="intro-envelope" aria-hidden="true">
+          <div class="intro-invitation-card">
+            <p class="intro-card-kicker">誠摯邀請您</p>
+            <p class="intro-card-names">景翔 &amp; 佳柔</p>
+            <p class="intro-card-date">2026.12.12</p>
+          </div>
+          <div class="intro-envelope-back"></div>
+          <div class="intro-envelope-body">
+            <span class="intro-envelope-seal">囍</span>
+            <span class="intro-envelope-names">景翔 &amp; 佳柔</span>
+            <span class="intro-envelope-date">2026.12.12</span>
+            <span class="intro-envelope-title">Wedding Invitation</span>
+          </div>
+          <div class="intro-envelope-wing intro-envelope-wing-left"></div>
+          <div class="intro-envelope-wing intro-envelope-wing-right"></div>
+          <div class="intro-envelope-flap"></div>
+        </div>
+        <button class="intro-button" id="intro-enter-button" type="button">
+          <span>輕觸開啟喜帖</span>
+        </button>
+        <p class="intro-guide" id="intro-guide">拆開喜帖，正式進入婚禮邀請</p>
       </div>
     </div>
 
     <button class="music-toggle" id="music-toggle" type="button" aria-label="背景音樂控制" aria-pressed="false">♫</button>
 
-    <audio id="bgm-audio" preload="none" loop>
-      <source src="assets/music/music.mp3" type="audio/mpeg">
-    </audio>
+    <!-- 未來若要加入背景音樂，建議放置於 assets/audio/wedding-music.mp3 並補上 source。 -->
+    <audio id="bgm-audio" preload="none" loop></audio>
 
     <main class="invitation">
       <section class="section hero-section" id="hero">
@@ -42,9 +61,7 @@
           <div class="hero-slide" data-hero-slide style="background-image: url('assets/photos/photo2.jpg');"></div>
         </div>
         <div class="hero-content reveal is-visible">
-          <p class="hero-english hero-line delay-1">WE</p>
-          <p class="hero-english hero-line delay-2">GET</p>
-          <p class="hero-english hero-line delay-3">MARRIED</p>
+          <p class="hero-english hero-kicker delay-1">WE ARE GETTING MARRIED</p>
           <p class="hero-message reveal is-visible delay-4" id="hero-message">誠摯邀請您蒞臨見證我們的重要時刻</p>
           <!-- 可修改：婚禮日期 -->
           <p class="hero-date reveal is-visible delay-4" id="hero-date">2026.12.12</p>
@@ -108,36 +125,57 @@
       <section class="section gallery-section" id="gallery">
         <div class="gallery-head reveal">
           <p class="section-english">PHOTO STORY</p>
-          <h2 class="section-title">我們的婚紗時光</h2>
+          <h2 class="section-title">我們的故事章節</h2>
+          <p class="section-note">把平凡日常收進照片裡，成為婚禮前最溫柔的序章。</p>
         </div>
         <div class="gallery-grid">
           <div class="gallery-pair">
-            <div class="media-frame tall-frame reveal">
+            <article class="story-card story-card-primary reveal">
+              <div class="media-frame tall-frame">
+                <!-- 可修改：照片路徑 -->
+                <img src="assets/photos/photo1.jpg" alt="照片故事 1">
+                <div class="media-placeholder">
+                  <p class="placeholder-label">MEMORY 01</p>
+                  <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
+                </div>
+              </div>
+              <div class="story-caption">
+                <p class="story-chapter">Chapter 01</p>
+                <h3>相遇以後的日常</h3>
+                <p>一路走來，謝謝彼此相伴。</p>
+              </div>
+            </article>
+            <article class="story-card story-card-offset reveal delay-1">
+              <div class="media-frame tall-frame">
+                <!-- 可修改：照片路徑 -->
+                <img src="assets/photos/photo2.jpg" alt="照片故事 2">
+                <div class="media-placeholder">
+                  <p class="placeholder-label">MEMORY 02</p>
+                  <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
+                </div>
+              </div>
+              <div class="story-caption">
+                <p class="story-chapter">Chapter 02</p>
+                <h3>一起走過的風景</h3>
+                <p>有些時刻，因為被記得而更加珍貴。</p>
+              </div>
+            </article>
+          </div>
+          <article class="story-card story-wide reveal delay-2">
+            <div class="media-frame wide-frame">
               <!-- 可修改：照片路徑 -->
-              <img src="assets/photos/photo1.jpg" alt="照片牆 1">
+              <img src="assets/photos/photo3.jpg" alt="照片故事 3">
               <div class="media-placeholder">
-                <p class="placeholder-label">MEMORY 01</p>
+                <p class="placeholder-label">MEMORY 03</p>
                 <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
               </div>
             </div>
-            <div class="media-frame tall-frame reveal delay-1">
-              <!-- 可修改：照片路徑 -->
-              <img src="assets/photos/photo2.jpg" alt="照片牆 2">
-              <div class="media-placeholder">
-                <p class="placeholder-label">MEMORY 02</p>
-                <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-              </div>
+            <div class="story-caption">
+              <p class="story-chapter">Chapter 03</p>
+              <h3>往後餘生，請多指教</h3>
+              <p>願往後每一段風景，都有彼此同行。</p>
             </div>
-          </div>
-          <div class="gallery-divider" aria-hidden="true">♡</div>
-          <div class="media-frame wide-frame reveal delay-2">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo3.jpg" alt="照片牆 3">
-            <div class="media-placeholder">
-              <p class="placeholder-label">MEMORY 03</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-          </div>
+          </article>
         </div>
       </section>
 
@@ -226,7 +264,7 @@
             <article class="info-item">
               <span class="info-label">地點</span>
               <!-- 可修改：婚禮地點 -->
-              <p class="info-value" id="info-venue">彭員婚宴八德館</p>
+              <p class="info-value" id="info-venue">彭園婚宴八德館</p>
             </article>
             <article class="info-item">
               <span class="info-label">宴會廳</span>
@@ -314,13 +352,12 @@
             </div>
           </div>
           <div class="thanks-copy">
-            <p>感謝您抽出寶貴的時間</p>
-            <p>與我們共同慶祝這特別的一天</p>
-            <p>非常榮幸能與您分享我們的愛情</p>
-            <p>誠摯邀請您參加我們的婚禮</p>
-            <p class="thanks-strong">我們婚禮見</p>
+            <p class="thanks-label">Thank You</p>
+            <p>謝謝您在這個重要日子裡與我們相聚</p>
+            <p>期待婚禮當天與您見面</p>
+            <p class="thanks-strong">景翔 &amp; 佳柔</p>
+            <p class="thanks-date">2026.12.12</p>
           </div>
-          <div class="thanks-toast" aria-hidden="true">🥂</div>
         </div>
       </section>
     </main>
@@ -332,12 +369,12 @@
       "bride": "佳柔",
       "date": "2026-12-12",
       "hero_message": "誠摯邀請您蒞臨見證我們的重要時刻",
-      "venue": "彭員婚宴八德館",
+      "venue": "彭園婚宴八德館",
       "hall": "宴會廳資訊將於婚禮前另行告知",
       "time": "午宴｜迎賓入席 12:00｜準時開席",
       "address": "桃園市八德區介壽路一段728號3樓",
       "parking": "會館周邊設有停車資訊，建議賓客提早抵達",
-      "map_link": "https://www.google.com/maps/search/?api=1&query=彭員婚宴八德館 桃園市八德區介壽路一段728號3樓",
+      "map_link": "https://www.google.com/maps/search/?api=1&query=彭園婚宴八德館 桃園市八德區介壽路一段728號3樓",
       "english_quote": "Together is our favorite place to be.",
       "intro_lines": [
         "一路走來，謝謝彼此相伴",
