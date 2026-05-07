@@ -396,6 +396,7 @@ span {
   position: relative;
   width: clamp(270px, 76vw, 382px);
   height: clamp(220px, 61vw, 310px);
+  overflow: hidden;
   transform-style: preserve-3d;
   filter: drop-shadow(0 24px 34px rgba(13, 3, 5, 0.34));
 }
@@ -422,7 +423,7 @@ span {
 }
 
 .intro-invitation-card {
-  bottom: 52px;
+  bottom: 20px;
   z-index: 2;
   width: 74%;
   height: 64%;
@@ -430,7 +431,7 @@ span {
   display: grid;
   align-content: center;
   gap: 10px;
-  transform: translateX(-50%) translateY(58px);
+  transform: translateX(-50%) translateY(44%);
   border-radius: 6px;
   color: #44231d;
   background:
@@ -441,7 +442,7 @@ span {
     0 16px 30px rgba(17, 3, 5, 0.18),
     inset 0 0 0 8px rgba(255, 253, 249, 0.58),
     inset 0 0 0 9px rgba(185, 148, 95, 0.22);
-  opacity: 0.98;
+  opacity: 0;
 }
 
 .intro-card-kicker,
@@ -561,13 +562,14 @@ span {
 }
 
 .intro-envelope-flap {
-  bottom: calc(20px + 58% - 1px);
+  bottom: 20px;
   z-index: 5;
   width: 86%;
-  height: 46%;
+  height: 58%;
   transform: translateX(-50%) rotateX(0deg);
-  transform-origin: 50% 100%;
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  transform-origin: 50% 0%;
+  backface-visibility: visible;
+  clip-path: polygon(0 0, 100% 0, 50% 42%);
   background:
     linear-gradient(180deg, rgba(255, 226, 166, 0.12), transparent 34%),
     linear-gradient(135deg, #bd3340, #7c1720 68%, #4e0d15);
@@ -807,11 +809,12 @@ span {
 
 .intro-opened .intro-envelope {
   animation: none;
+  overflow: visible;
 }
 
 .intro-opened .intro-envelope-flap {
-  transform: translateX(-50%) rotateX(-170deg);
-  transition: transform 0.92s cubic-bezier(0.18, 0.76, 0.2, 1);
+  animation: envelopeFlapOpen 1s 0.04s cubic-bezier(0.18, 0.76, 0.2, 1) forwards;
+  transition: none;
 }
 
 .intro-opened .intro-invitation-card {
@@ -1784,22 +1787,45 @@ body.is-intro-active .invitation {
   }
 }
 
+@keyframes envelopeFlapOpen {
+  0% {
+    transform: translateX(-50%) translateY(0) scaleY(1);
+  }
+  42% {
+    transform: translateX(-50%) translateY(-30%) scaleY(0.32);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-54%) scaleY(-0.72);
+  }
+}
+
 @keyframes invitationSlideOut {
   0% {
-    transform: translateX(-50%) translateY(58px);
+    opacity: 0;
+    transform: translateX(-50%) translateY(44%);
+  }
+  22% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30%);
   }
   58% {
+    opacity: 1;
     transform: translateX(-50%) translateY(-88px);
   }
   100% {
+    opacity: 1;
     transform: translateX(-50%) translateY(-76px);
   }
 }
 
 @keyframes invitationPremiumReveal {
   0% {
-    opacity: 0.98;
-    transform: translateX(-50%) translateY(58px) scale(1);
+    opacity: 0;
+    transform: translateX(-50%) translateY(44%) scale(1);
+  }
+  18% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30%) scale(1);
   }
   48% {
     opacity: 1;
@@ -2295,12 +2321,14 @@ body.is-intro-active .invitation {
   }
 
   .intro-opened .intro-envelope-flap {
-    transform: translateX(-50%) rotateX(-130deg);
+    transform: translateX(-50%) translateY(-54%) scaleY(-0.72);
+    animation: none;
     transition: none;
   }
 
   .intro-opened .intro-invitation-card {
     animation: none;
+    opacity: 1;
     transform: translateX(-50%) translateY(-64px);
   }
 
