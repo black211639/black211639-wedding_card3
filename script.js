@@ -1,14 +1,14 @@
 const defaultWeddingInfo = {
-  groom: "景翔",
-  bride: "佳柔",
+  groom: "新郎",
+  bride: "新娘",
   date: "2026-12-12",
   hero_message: "誠摯邀請您蒞臨見證我們的重要時刻",
-  venue: "彭園婚宴八德館",
-  hall: "宴會廳資訊將於婚禮前另行告知",
+  venue: "婚禮地點請參考 wedding_info.json",
+  hall: "宴會廳資訊請參考 wedding_info.json",
   time: "午宴｜迎賓入席 12:00｜準時開席",
-  address: "桃園市八德區介壽路一段728號3樓",
-  parking: "會館周邊設有停車資訊，建議賓客提早抵達",
-  map_link: "https://www.google.com/maps/search/?api=1&query=彭園婚宴八德館 桃園市八德區介壽路一段728號3樓",
+  address: "婚禮地址請參考 wedding_info.json",
+  parking: "停車資訊請參考 wedding_info.json",
+  map_link: "https://www.google.com/maps",
   english_quote: "Together is our favorite place to be.",
   intro_lines: [
     "一路走來，謝謝彼此相伴",
@@ -112,12 +112,13 @@ function renderWeddingInfo(data) {
   setText("hero-date", shortDate);
   setText("hero-names", `${groom} & ${bride}`);
   setText("hero-message", data.hero_message || defaultWeddingInfo.hero_message);
-  setText("info-date", `${dateDisplay} 星期六`);
+  setText("info-date", `${dateDisplay} ${formatWeekdayZh(data.date || defaultWeddingInfo.date)}`);
   setText("info-venue", data.venue || defaultWeddingInfo.venue);
   setText("info-hall", data.hall || defaultWeddingInfo.hall);
   setText("info-time", data.time || defaultWeddingInfo.time);
   setText("info-address", data.address || defaultWeddingInfo.address);
   setText("info-parking", data.parking || defaultWeddingInfo.parking);
+  setTextBySelector(".map-placeholder-copy", data.address || defaultWeddingInfo.address);
   setText("map-description-line1", mapLines[0] || defaultWeddingInfo.map_description[0]);
   setText("map-description-line2", mapLines[1] || defaultWeddingInfo.map_description[1]);
 
@@ -304,6 +305,8 @@ function setupIntroOverlay() {
   const envelopeStage = overlay?.querySelector(".envelope-stage");
   const audio = document.getElementById("bgm-audio");
   let hasEntered = false;
+  let isFinishing = false;
+  let introTimers = [];
 
   if (!overlay) {
     document.body.classList.remove("is-intro-active");
@@ -337,23 +340,49 @@ function setupIntroOverlay() {
   }
 
   const finishIntro = () => {
+    if (isFinishing) {
+      return;
+    }
+
+    isFinishing = true;
+    introTimers.forEach((timerId) => window.clearTimeout(timerId));
+    introTimers = [];
     overlay.hidden = true;
     overlay.classList.add("is-hidden", "state-finished");
     document.body.classList.remove("is-intro-active");
     document.body.classList.add("intro-complete");
   };
 
+  const scheduleIntroStep = (callback, delay) => {
+    const timerId = window.setTimeout(callback, delay);
+    introTimers.push(timerId);
+  };
+
+  const skipIntro = () => {
+    if (!hasEntered || isFinishing) {
+      return;
+    }
+
+    introTimers.forEach((timerId) => window.clearTimeout(timerId));
+    introTimers = [];
+    overlay.classList.add("is-leaving", "state-fade-out");
+    overlay.setAttribute("aria-hidden", "true");
+    scheduleIntroStep(finishIntro, 260);
+  };
+
   const enterIntro = () => {
     if (hasEntered || state.introDismissed) {
+      skipIntro();
       return;
     }
 
     hasEntered = true;
     state.introDismissed = true;
 
-    button.disabled = true;
+    button.textContent = "略過動畫";
+    button.setAttribute("aria-label", "略過開場動畫，直接進入喜帖");
     if (envelopeStage) {
-      envelopeStage.disabled = true;
+      envelopeStage.setAttribute("aria-label", "略過開場動畫，直接進入喜帖");
     }
 
     if (audio && typeof audio.play === "function" && hasPlayableAudioSource(audio)) {
@@ -366,19 +395,19 @@ function setupIntroOverlay() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       overlay.classList.add("is-leaving", "state-fade-out");
       overlay.setAttribute("aria-hidden", "true");
-      window.setTimeout(finishIntro, 620);
+      scheduleIntroStep(finishIntro, 320);
       return;
     }
 
-    window.setTimeout(() => overlay.classList.add("is-opening"), 500);
-    window.setTimeout(() => overlay.classList.add("is-flipped", "state-back"), 1400);
-    window.setTimeout(() => overlay.classList.add("state-back-hold"), 2100);
-    window.setTimeout(() => overlay.classList.add("is-card-out", "state-card-out"), 3100);
-    window.setTimeout(() => {
+    scheduleIntroStep(() => overlay.classList.add("is-opening"), 250);
+    scheduleIntroStep(() => overlay.classList.add("is-flipped", "state-back"), 800);
+    scheduleIntroStep(() => overlay.classList.add("state-back-hold"), 1200);
+    scheduleIntroStep(() => overlay.classList.add("is-card-out", "state-card-out"), 1850);
+    scheduleIntroStep(() => {
       overlay.classList.add("is-leaving", "state-fade-out");
       overlay.setAttribute("aria-hidden", "true");
-    }, 5200);
-    window.setTimeout(finishIntro, 5900);
+    }, 3000);
+    scheduleIntroStep(finishIntro, 3500);
   };
 
   button.addEventListener("click", enterIntro);
@@ -490,8 +519,15 @@ function setText(id, value) {
   }
 }
 
+function setTextBySelector(selector, value) {
+  const element = document.querySelector(selector);
+  if (element) {
+    element.textContent = value;
+  }
+}
+
 function formatDateDots(dateString) {
-  const date = new Date(dateString);
+  const date = parseDateValue(dateString);
   if (Number.isNaN(date.getTime())) {
     return dateString;
   }
@@ -503,7 +539,7 @@ function formatDateDots(dateString) {
 }
 
 function formatDateZh(dateString) {
-  const date = new Date(dateString);
+  const date = parseDateValue(dateString);
   if (Number.isNaN(date.getTime())) {
     return dateString;
   }
@@ -512,6 +548,27 @@ function formatDateZh(dateString) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}年${month}月${day}日`;
+}
+
+function formatWeekdayZh(dateString) {
+  const date = parseDateValue(dateString);
+  const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return weekdays[date.getDay()];
+}
+
+function parseDateValue(dateString) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateString));
+
+  if (match) {
+    return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  }
+
+  return new Date(dateString);
 }
 
 function escapeHtml(value) {
