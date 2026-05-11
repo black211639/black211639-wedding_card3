@@ -147,6 +147,14 @@ Write-Host ""
 Write-Host "Uploading to GitHub..." -ForegroundColor Cyan
 
 Run-Git -Args (@("add", "-A", "--") + $publishPaths)
+
+& git diff --cached --quiet -- $publishPaths
+if ($LASTEXITCODE -eq 0) {
+  Write-Host ""
+  Write-Host "No staged content changes detected. Nothing to upload." -ForegroundColor Yellow
+  exit 0
+}
+
 Run-Git -Args @("commit", "-m", $commitMessage)
 
 if (-not $hasCommit) {
