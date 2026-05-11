@@ -373,12 +373,12 @@ function setupIntroOverlay() {
     window.setTimeout(() => overlay.classList.add("is-opening"), 500);
     window.setTimeout(() => overlay.classList.add("is-flipped", "state-back"), 1400);
     window.setTimeout(() => overlay.classList.add("state-back-hold"), 2100);
-    window.setTimeout(() => overlay.classList.add("is-card-out", "state-card-out"), 2900);
+    window.setTimeout(() => overlay.classList.add("is-card-out", "state-card-out"), 3100);
     window.setTimeout(() => {
       overlay.classList.add("is-leaving", "state-fade-out");
       overlay.setAttribute("aria-hidden", "true");
-    }, 4800);
-    window.setTimeout(finishIntro, 5500);
+    }, 5200);
+    window.setTimeout(finishIntro, 5900);
   };
 
   button.addEventListener("click", enterIntro);
