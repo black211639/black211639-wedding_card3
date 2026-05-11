@@ -13,37 +13,31 @@
 <body>
   <div class="site-shell">
     <div class="intro-overlay" id="intro-overlay" aria-hidden="false">
-      <div class="intro-glow intro-glow-a"></div>
-      <div class="intro-glow intro-glow-b"></div>
-      <div class="intro-petal intro-petal-a" aria-hidden="true"></div>
-      <div class="intro-petal intro-petal-b" aria-hidden="true"></div>
-      <div class="intro-sparkle intro-sparkle-a" aria-hidden="true"></div>
-      <div class="intro-sparkle intro-sparkle-b" aria-hidden="true"></div>
-      <div class="intro-bloom" aria-hidden="true"></div>
-      <div class="intro-stage" role="dialog" aria-modal="true" aria-labelledby="intro-heading" aria-describedby="intro-guide">
-        <p class="intro-label">誠摯邀請您</p>
-        <h1 class="intro-title" id="intro-heading">景翔 &amp; 佳柔<br><span>的婚禮</span></h1>
-        <div class="intro-envelope" aria-hidden="true">
-          <div class="intro-invitation-card">
-            <p class="intro-card-kicker">誠摯邀請您</p>
-            <p class="intro-card-names">景翔 &amp; 佳柔</p>
-            <p class="intro-card-date">2026.12.12</p>
-          </div>
-          <div class="intro-envelope-back"></div>
-          <div class="intro-envelope-body">
-            <span class="intro-envelope-seal">囍</span>
-            <span class="intro-envelope-names">景翔 &amp; 佳柔</span>
-            <span class="intro-envelope-date">2026.12.12</span>
-            <span class="intro-envelope-title">Wedding Invitation</span>
-          </div>
-          <div class="intro-envelope-wing intro-envelope-wing-left"></div>
-          <div class="intro-envelope-wing intro-envelope-wing-right"></div>
-          <div class="intro-envelope-flap"></div>
-        </div>
-        <button class="intro-button" id="intro-enter-button" type="button">
-          <span>輕觸開啟喜帖</span>
+      <div class="envelope-intro" role="dialog" aria-modal="true" aria-label="Wedding Invitation">
+        <button class="envelope-stage" type="button" aria-label="輕觸信封，開啟喜帖">
+          <span class="envelope-object">
+            <span class="envelope-face envelope-front-face">
+              <span class="envelope-front-title">Wedding Invitation</span>
+              <span class="envelope-front-names">景翔 &amp; 佳柔</span>
+              <span class="envelope-front-date">2026.12.12</span>
+            </span>
+            <span class="envelope-face envelope-back-face">
+              <span class="envelope-back-base"></span>
+              <span class="envelope-card-slot" aria-hidden="true">
+                <span class="invitation-card">
+                  <span class="invitation-card-title">敬邀蒞臨</span>
+                </span>
+              </span>
+              <span class="envelope-pocket"></span>
+              <span class="envelope-flap"></span>
+              <span class="envelope-seal">囍</span>
+            </span>
+          </span>
         </button>
-        <p class="intro-guide" id="intro-guide">拆開喜帖，正式進入婚禮邀請</p>
+        <button id="intro-enter-button" class="intro-enter-button" type="button">
+          輕觸開啟喜帖
+        </button>
+        <p class="envelope-hint">輕觸信封，開啟喜帖</p>
       </div>
     </div>
 

@@ -102,7 +102,18 @@ if ([string]::IsNullOrWhiteSpace($gitUserEmail)) {
 Write-Host "Checking GitHub remote access..." -ForegroundColor Cyan
 Test-GitHubRemoteAccess -RemoteName "origin"
 
-$status = (& git status --porcelain)
+$publishPaths = @(
+  ".nojekyll",
+  "index.html",
+  "style.css",
+  "script.js",
+  "wedding_info.json",
+  "assets",
+  "publish.bat",
+  "publish.ps1"
+)
+
+$status = (& git status --porcelain -- $publishPaths)
 if ($LASTEXITCODE -ne 0) {
   Fail "Could not read git status."
 }
@@ -135,7 +146,7 @@ if ([string]::IsNullOrWhiteSpace($commitMessage)) {
 Write-Host ""
 Write-Host "Uploading to GitHub..." -ForegroundColor Cyan
 
-Run-Git -Args @("add", ".")
+Run-Git -Args (@("add", "-A", "--") + $publishPaths)
 Run-Git -Args @("commit", "-m", $commitMessage)
 
 if (-not $hasCommit) {

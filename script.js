@@ -301,100 +301,92 @@ function setupMusicToggle() {
 function setupIntroOverlay() {
   const overlay = document.getElementById("intro-overlay");
   const button = document.getElementById("intro-enter-button");
+  const envelopeStage = overlay?.querySelector(".envelope-stage");
+  const audio = document.getElementById("bgm-audio");
+  let hasEntered = false;
 
-  if (!overlay || !button) {
+  if (!overlay) {
     document.body.classList.remove("is-intro-active");
     return;
   }
 
-  const openIntro = (event) => {
-    event?.preventDefault();
-    handleIntroEnter();
+  overlay.classList.remove(
+    "is-opening",
+    "is-flipped",
+    "is-unsealed",
+    "is-card-out",
+    "is-leaving",
+    "is-hidden",
+    "state-front",
+    "state-back",
+    "state-back-hold",
+    "state-flap-open",
+    "state-open-hold",
+    "state-card-out",
+    "state-fade-out",
+    "state-finished"
+  );
+  overlay.classList.add("state-front");
+  overlay.hidden = false;
+  overlay.setAttribute("aria-hidden", "false");
+
+  if (!button) {
+    document.body.classList.remove("is-intro-active");
+    overlay.hidden = true;
+    return;
+  }
+
+  const finishIntro = () => {
+    overlay.hidden = true;
+    overlay.classList.add("is-hidden", "state-finished");
+    document.body.classList.remove("is-intro-active");
+    document.body.classList.add("intro-complete");
   };
 
-  overlay.addEventListener("click", openIntro);
-  button.addEventListener("click", openIntro);
-  overlay.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      openIntro(event);
+  const enterIntro = () => {
+    if (hasEntered || state.introDismissed) {
+      return;
     }
-  });
 
-  overlay.tabIndex = -1;
+    hasEntered = true;
+    state.introDismissed = true;
+
+    button.disabled = true;
+    if (envelopeStage) {
+      envelopeStage.disabled = true;
+    }
+
+    if (audio && typeof audio.play === "function" && hasPlayableAudioSource(audio)) {
+      state.audioActivated = true;
+      audio.play()
+        .then(() => updateMusicButton(true))
+        .catch(() => updateMusicButton(false));
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      overlay.classList.add("is-leaving", "state-fade-out");
+      overlay.setAttribute("aria-hidden", "true");
+      window.setTimeout(finishIntro, 620);
+      return;
+    }
+
+    window.setTimeout(() => overlay.classList.add("is-opening"), 500);
+    window.setTimeout(() => overlay.classList.add("is-flipped", "state-back"), 1400);
+    window.setTimeout(() => overlay.classList.add("state-back-hold"), 2100);
+    window.setTimeout(() => overlay.classList.add("is-card-out", "state-card-out"), 3100);
+    window.setTimeout(() => {
+      overlay.classList.add("is-leaving", "state-fade-out");
+      overlay.setAttribute("aria-hidden", "true");
+    }, 5200);
+    window.setTimeout(finishIntro, 5900);
+  };
+
+  button.addEventListener("click", enterIntro);
+  if (envelopeStage) {
+    envelopeStage.addEventListener("click", enterIntro);
+  }
+
   window.setTimeout(() => button.focus({ preventScroll: true }), 80);
-}
-
-async function handleIntroEnter() {
-  if (state.introDismissed) {
-    return;
-  }
-
-  dismissIntroOverlay();
-  await tryStartBackgroundMusic();
-}
-
-function dismissIntroOverlay() {
-  if (state.introDismissed) {
-    return;
-  }
-
-  state.introDismissed = true;
-
-  const overlay = document.getElementById("intro-overlay");
-  if (overlay) {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    overlay.classList.add("intro-opening");
-    overlay.setAttribute("aria-hidden", "true");
-    overlay.querySelectorAll("button").forEach((button) => {
-      button.disabled = true;
-    });
-
-    window.setTimeout(() => {
-      overlay.classList.add("intro-opened");
-    }, reduceMotion ? 40 : 280);
-
-    window.setTimeout(() => {
-      document.body.classList.remove("is-intro-active");
-      overlay.classList.add("intro-hidden", "intro-dismissed", "is-hidden");
-    }, reduceMotion ? 420 : 2680);
-
-    window.setTimeout(() => {
-      overlay.remove();
-    }, reduceMotion ? 760 : 3400);
-    return;
-  }
-
-  document.body.classList.remove("is-intro-active");
-}
-
-async function tryStartBackgroundMusic() {
-  if (state.audioActivated || !state.audioReady) {
-    return;
-  }
-
-  state.audioActivated = true;
-
-  const audio = document.getElementById("bgm-audio");
-  if (!audio) {
-    return;
-  }
-
-  if (!hasPlayableAudioSource(audio)) {
-    state.audioReady = false;
-    const button = document.getElementById("music-toggle");
-    if (button) {
-      setMusicUnavailableState(button);
-    }
-    updateMusicButton(false);
-    return;
-  }
-
-  try {
-    await audio.play();
-    updateMusicButton(true);
-  } catch {
-    updateMusicButton(false);
-  }
 }
 
 function updateMusicButton(isPlaying) {
