@@ -1396,6 +1396,11 @@ body {
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   -webkit-tap-highlight-color: transparent;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-overlay.is-opening .envelope-stage {
+  transform: translateY(3px) scale(0.992);
 }
 
 .envelope-stage:focus-visible {
@@ -1411,16 +1416,23 @@ body {
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   animation: envelopeIntroIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    filter 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .intro-overlay.is-opening .envelope-object {
   transform: translateY(5px) scale(0.985);
+  filter: drop-shadow(0 18px 28px rgba(98, 35, 42, 0.16));
 }
 
 .intro-overlay.is-flipped .envelope-object {
   transform: none;
+}
+
+.intro-overlay.state-card-out .envelope-object {
+  transform: translateY(-4px) scale(1.015);
 }
 
 .envelope-face {
@@ -1479,10 +1491,7 @@ body {
 
 .envelope-front-title,
 .envelope-front-names,
-.envelope-front-date,
-.invitation-card-kicker,
-.invitation-card-names,
-.invitation-card-date {
+.envelope-front-date {
   position: relative;
   z-index: 2;
   display: block;
@@ -1541,9 +1550,8 @@ body {
 }
 
 .envelope-back-base,
-.envelope-card-slot,
-.envelope-flap,
-.envelope-pocket {
+.back-invitation-card,
+.back-pocket {
   position: absolute;
   pointer-events: none;
 }
@@ -1558,152 +1566,38 @@ body {
     linear-gradient(145deg, #963443 0%, #842738 54%, #6f2e3f 100%);
 }
 
-.envelope-flap {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 56%;
-  z-index: 5;
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 44%),
-    linear-gradient(160deg, rgba(122, 35, 55, 0.98), rgba(92, 24, 42, 0.98));
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  transform-origin: top center;
-  transform: rotateX(0deg);
-  transition:
-    opacity 400ms ease,
-    filter 900ms ease;
-}
-
-.intro-overlay.is-unsealed .envelope-flap,
-.intro-overlay.is-flipped .envelope-flap,
-.intro-overlay.state-flap-open .envelope-flap,
-.intro-overlay.state-open-hold .envelope-flap,
-.intro-overlay.state-card-out .envelope-flap {
-  transform: rotateX(0deg);
-  opacity: 0;
-  filter: none;
-}
-
-.envelope-card-slot {
-  inset: 0;
+.back-invitation-card {
   z-index: 2;
-  overflow: hidden;
-  border-radius: 20px;
-}
-
-.envelope-pocket {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 50%;
-  z-index: 3;
-  border-radius: 0 0 18px 18px;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 34%),
-    linear-gradient(145deg, rgba(122, 35, 55, 0.98), rgba(88, 22, 40, 0.98));
-  clip-path: polygon(0 0, 50% 0, 100% 0, 100% 100%, 0 100%);
-  box-shadow:
-    0 -8px 18px rgba(45, 8, 20, 0.16),
-    0 -1px 0 rgba(218, 174, 95, 0.26),
-    inset 0 12px 22px rgba(255, 255, 255, 0.035);
-}
-
-.envelope-pocket::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(236, 198, 126, 0.32), transparent);
-}
-
-.envelope-pocket::after {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  top: 0;
-  height: 20px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(35, 6, 18, 0.22), transparent 68%);
-  opacity: 0.72;
-}
-
-.envelope-seal {
-  position: absolute;
-  z-index: 6;
-  top: 42%;
   left: 50%;
+  bottom: 6%;
+  width: 72%;
+  height: 76%;
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
-  border: 1px solid rgba(255, 238, 189, 0.46);
-  border-radius: 999px;
-  color: #f0d69a;
-  background:
-    radial-gradient(circle at 34% 28%, rgba(255, 246, 214, 0.26), transparent 30%),
-    rgba(118, 60, 52, 0.76);
-  box-shadow: 0 8px 16px rgba(67, 33, 29, 0.16);
-  font-family: var(--font-serif);
-  font-size: 1.72rem;
-  font-weight: 600;
-  line-height: 1;
-  transform: translate(-50%, -50%);
-  transition: opacity 350ms ease, transform 550ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.intro-overlay.is-unsealed .envelope-seal,
-.intro-overlay.is-flipped .envelope-seal,
-.intro-overlay.state-flap-open .envelope-seal,
-.intro-overlay.state-open-hold .envelope-seal,
-.intro-overlay.state-card-out .envelope-seal {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.82);
-}
-
-.envelope-back-face .invitation-card {
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  right: auto;
-  bottom: 8%;
-  width: 74%;
-  height: 66%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 18px;
-  border: 1px solid rgba(190, 151, 82, 0.38);
-  border-radius: 14px 14px 8px 8px;
-  color: #4a332d;
+  border: 1px solid rgba(190, 151, 82, 0.46);
+  border-radius: 15px 15px 9px 9px;
+  color: #8f2c36;
   background:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.82), transparent 42%),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.88), transparent 42%),
     linear-gradient(180deg, rgba(255, 253, 247, 0.99), rgba(250, 239, 222, 0.99)),
     repeating-linear-gradient(90deg, rgba(126, 76, 52, 0.014) 0 1px, transparent 1px 12px);
   box-shadow:
-    0 -10px 26px rgba(80, 20, 20, 0.13),
+    0 14px 28px rgba(66, 21, 28, 0.16),
     inset 0 0 0 4px rgba(255, 255, 255, 0.24);
-  transform: translateX(-50%) translateY(12%);
   opacity: 1;
-  pointer-events: none;
-  transition:
-    transform 1150ms cubic-bezier(0.2, 0.82, 0.22, 1),
-    opacity 520ms ease;
+  transform: translateX(-50%) translateY(0);
+  transition: transform 820ms cubic-bezier(0.2, 0.86, 0.28, 1.12);
+  will-change: transform;
 }
 
-.intro-overlay.is-card-out .envelope-back-face .invitation-card,
-.intro-overlay.state-card-out .envelope-back-face .invitation-card {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-44%);
+.intro-overlay.is-card-out .back-invitation-card,
+.intro-overlay.state-card-out .back-invitation-card {
+  transform: translateX(-50%) translateY(-48%);
 }
 
-.envelope-back-face .invitation-card::before,
-.envelope-back-face .invitation-card::after {
+.back-invitation-card::before,
+.back-invitation-card::after {
   content: "";
   position: absolute;
   left: 24px;
@@ -1712,32 +1606,18 @@ body {
   background: linear-gradient(90deg, transparent, rgba(185, 148, 95, 0.48), transparent);
 }
 
-.envelope-back-face .invitation-card::before {
+.back-invitation-card::before {
   top: 18px;
 }
 
-.envelope-back-face .invitation-card::after {
+.back-invitation-card::after {
   bottom: 18px;
 }
 
-.envelope-back-face .invitation-card-title {
+.back-invitation-title {
   position: relative;
   z-index: 2;
   display: block;
-  opacity: 0;
-  transform: translateY(5px);
-  transition:
-    opacity 360ms ease 260ms,
-    transform 360ms ease 260ms;
-}
-
-.intro-overlay.is-card-out .envelope-back-face .invitation-card-title,
-.intro-overlay.state-card-out .envelope-back-face .invitation-card-title {
-  opacity: 1;
-  transform: translateY(8%);
-}
-
-.invitation-card-title {
   color: #8f2c36;
   font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
   font-size: clamp(1.2rem, 4.8vw, 1.58rem);
@@ -1748,29 +1628,44 @@ body {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.64);
 }
 
-.invitation-card-kicker {
-  color: #8f1f2b;
-  font-family: var(--font-serif);
-  font-size: clamp(1rem, 4vw, 1.32rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  white-space: nowrap;
+.back-pocket {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 100%;
+  height: 64%;
+  border-radius: 0 0 18px 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 34%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 12px),
+    linear-gradient(145deg, rgba(132, 39, 56, 0.99), rgba(92, 24, 42, 0.99));
+  box-shadow:
+    0 -10px 20px rgba(45, 8, 20, 0.2),
+    0 -1px 0 rgba(236, 198, 126, 0.34),
+    inset 0 13px 24px rgba(255, 255, 255, 0.04);
 }
 
-.invitation-card-names {
-  color: #4f332c;
-  font-family: var(--font-serif);
-  font-size: clamp(1.34rem, 5.4vw, 1.86rem);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+.back-pocket::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(236, 198, 126, 0.48), transparent);
 }
 
-.invitation-card-date {
-  color: rgba(73, 45, 32, 0.72);
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  letter-spacing: 0.16em;
+.back-pocket::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 24px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(35, 6, 18, 0.24), transparent 68%);
+  opacity: 0.74;
 }
 
 .intro-enter-button {
@@ -1891,20 +1786,13 @@ body.is-intro-active .invitation {
     font-size: clamp(1.62rem, 6.8vw, 1.92rem);
   }
 
-  .envelope-seal {
-    width: 52px;
-    height: 52px;
-    font-size: 1.54rem;
-  }
-
-  .envelope-back-face .invitation-card {
+  .back-invitation-card {
     left: 50%;
-    right: auto;
-    width: 74%;
+    width: 72%;
     padding-inline: 14px;
   }
 
-  .invitation-card-title {
+  .back-invitation-title {
     font-size: 1rem;
     letter-spacing: 0.24em;
   }
@@ -1937,9 +1825,7 @@ body.is-intro-active .invitation {
 @media (prefers-reduced-motion: reduce) {
   .intro-overlay,
   .envelope-object,
-  .envelope-flap,
-  .envelope-seal,
-  .envelope-back-face .invitation-card,
+  .back-invitation-card,
   .invitation,
   .hero-slide {
     animation: none;

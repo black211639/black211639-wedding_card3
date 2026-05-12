@@ -112,6 +112,8 @@ function renderWeddingInfo(data) {
   setText("hero-date", shortDate);
   setText("hero-names", `${groom} & ${bride}`);
   setText("hero-message", data.hero_message || defaultWeddingInfo.hero_message);
+  setTextBySelector(".envelope-front-names", `${groom} & ${bride}`);
+  setTextBySelector(".envelope-front-date", shortDate);
   setText("info-date", `${dateDisplay} ${formatWeekdayZh(data.date || defaultWeddingInfo.date)}`);
   setText("info-venue", data.venue || defaultWeddingInfo.venue);
   setText("info-hall", data.hall || defaultWeddingInfo.hall);
@@ -316,15 +318,12 @@ function setupIntroOverlay() {
   overlay.classList.remove(
     "is-opening",
     "is-flipped",
-    "is-unsealed",
     "is-card-out",
     "is-leaving",
     "is-hidden",
     "state-front",
     "state-back",
     "state-back-hold",
-    "state-flap-open",
-    "state-open-hold",
     "state-card-out",
     "state-fade-out",
     "state-finished"
@@ -399,15 +398,15 @@ function setupIntroOverlay() {
       return;
     }
 
-    scheduleIntroStep(() => overlay.classList.add("is-opening"), 250);
-    scheduleIntroStep(() => overlay.classList.add("is-flipped", "state-back"), 800);
-    scheduleIntroStep(() => overlay.classList.add("state-back-hold"), 1200);
-    scheduleIntroStep(() => overlay.classList.add("is-card-out", "state-card-out"), 1850);
+    scheduleIntroStep(() => overlay.classList.add("is-opening"), 120);
+    scheduleIntroStep(() => overlay.classList.add("is-flipped", "state-back"), 760);
+    scheduleIntroStep(() => overlay.classList.add("state-back-hold"), 1120);
+    scheduleIntroStep(() => overlay.classList.add("is-card-out", "state-card-out"), 1350);
     scheduleIntroStep(() => {
       overlay.classList.add("is-leaving", "state-fade-out");
       overlay.setAttribute("aria-hidden", "true");
-    }, 3000);
-    scheduleIntroStep(finishIntro, 3500);
+    }, 3200);
+    scheduleIntroStep(finishIntro, 3900);
   };
 
   button.addEventListener("click", enterIntro);
