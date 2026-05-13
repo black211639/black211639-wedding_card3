@@ -29,6 +29,15 @@ html {
   overflow-x: hidden;
 }
 
+html.fonts-loading .envelope-intro {
+  opacity: 0;
+}
+
+html.fonts-ready .envelope-intro,
+html.fonts-timeout .envelope-intro {
+  opacity: 1;
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -1401,6 +1410,8 @@ body {
   gap: 20px;
   width: min(100%, 430px);
   text-align: center;
+  opacity: 1;
+  transition: opacity 260ms ease;
 }
 
 .envelope-stage {

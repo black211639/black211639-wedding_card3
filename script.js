@@ -47,6 +47,8 @@ const state = {
   introDismissed: false
 };
 
+prepareIntroFonts();
+
 document.addEventListener("DOMContentLoaded", async () => {
   document.body.classList.add("is-intro-active");
 
@@ -60,6 +62,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupRevealObserver();
   setupCountdown(weddingInfo.countdown_target || defaultWeddingInfo.countdown_target);
 });
+
+function prepareIntroFonts() {
+  const root = document.documentElement;
+  const markReady = (className) => {
+    root.classList.remove("fonts-loading");
+    root.classList.add(className);
+  };
+
+  if (!document.fonts || typeof document.fonts.load !== "function") {
+    markReady("fonts-ready");
+    return;
+  }
+
+  const introFontLoads = Promise.all([
+    document.fonts.load('600 36px "Noto Serif TC"'),
+    document.fonts.load('500 18px "Cormorant Garamond"'),
+    document.fonts.load('500 18px "Playfair Display"')
+  ]);
+
+  Promise.race([
+    introFontLoads.then(() => "fonts-ready"),
+    new Promise((resolve) => window.setTimeout(() => resolve("fonts-timeout"), 1800))
+  ])
+    .then(markReady)
+    .catch(() => markReady("fonts-timeout"));
+}
 
 async function loadWeddingInfo() {
   const embeddedData = readEmbeddedWeddingInfo();
