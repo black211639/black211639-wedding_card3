@@ -1707,9 +1707,12 @@ body {
     transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.intro-overlay.state-card-settle .envelope-back-face .invitation-card-title,
-.intro-overlay.state-card-settle .envelope-back-face .invitation-card-kicker,
-.intro-overlay.state-card-settle .back-invitation-title {
+.intro-overlay.is-card-out .envelope-back-face .invitation-card-title,
+.intro-overlay.state-card-out .envelope-back-face .invitation-card-title,
+.intro-overlay.is-card-out .envelope-back-face .invitation-card-kicker,
+.intro-overlay.state-card-out .envelope-back-face .invitation-card-kicker,
+.intro-overlay.is-card-out .back-invitation-title,
+.intro-overlay.state-card-out .back-invitation-title {
   opacity: 1;
   transform: translateY(0);
 }
