@@ -431,12 +431,12 @@ function setupIntroOverlay() {
     scheduleIntroStep(() => overlay.classList.add("is-flipped", "state-back"), 760);
     scheduleIntroStep(() => overlay.classList.add("state-back-hold"), 1120);
     scheduleIntroStep(() => overlay.classList.add("is-card-out", "state-card-out"), 1350);
-    scheduleIntroStep(() => overlay.classList.add("state-card-settle"), 2120);
+    scheduleIntroStep(() => overlay.classList.add("state-card-settle"), 2140);
     scheduleIntroStep(() => {
       overlay.classList.add("is-leaving", "state-fade-out");
       overlay.setAttribute("aria-hidden", "true");
-    }, 3200);
-    scheduleIntroStep(finishIntro, 3900);
+    }, 3180);
+    scheduleIntroStep(finishIntro, 3530);
   };
 
   button.addEventListener("click", enterIntro);
