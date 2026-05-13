@@ -1367,6 +1367,26 @@ body {
     visibility 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.intro-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 247, 224, 0.54), transparent 24%),
+    linear-gradient(180deg, transparent, rgba(255, 250, 240, 0.2));
+  transform: scale(0.94);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-overlay.state-card-settle::after {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
 .intro-overlay.is-leaving,
 .intro-overlay.is-hidden {
   opacity: 0;
@@ -1392,7 +1412,7 @@ body {
   border-radius: 20px;
   background: transparent;
   cursor: pointer;
-  perspective: 900px;
+  perspective: 1080px;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   -webkit-tap-highlight-color: transparent;
@@ -1400,7 +1420,7 @@ body {
 }
 
 .intro-overlay.is-opening .envelope-stage {
-  transform: translateY(3px) scale(0.992);
+  transform: translateY(4px) scale(0.988);
 }
 
 .envelope-stage:focus-visible {
@@ -1412,27 +1432,31 @@ body {
   position: absolute;
   inset: 0;
   display: block;
-  perspective: 900px;
+  perspective: 1080px;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   animation: envelopeIntroIn 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
   transition:
-    filter 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    filter 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 760ms cubic-bezier(0.19, 0.86, 0.24, 1);
   will-change: transform;
 }
 
 .intro-overlay.is-opening .envelope-object {
-  transform: translateY(5px) scale(0.985);
-  filter: drop-shadow(0 18px 28px rgba(98, 35, 42, 0.16));
+  transform: translateY(7px) rotateX(2deg) scale(0.982);
+  filter: drop-shadow(0 18px 28px rgba(98, 35, 42, 0.2));
 }
 
 .intro-overlay.is-flipped .envelope-object {
-  transform: none;
+  transform: translateY(0) rotateX(0deg) scale(1);
 }
 
 .intro-overlay.state-card-out .envelope-object {
-  transform: translateY(-4px) scale(1.015);
+  transform: translateY(-5px) scale(1.012);
+}
+
+.intro-overlay.state-card-settle .envelope-object {
+  transform: translateY(-2px) scale(1.006);
 }
 
 .envelope-face {
@@ -1453,16 +1477,16 @@ body {
   transform: rotateY(0deg);
   transition:
     opacity 120ms ease,
-    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 680ms cubic-bezier(0.2, 0.82, 0.24, 1);
 }
 
 .intro-overlay.is-opening:not(.is-flipped) .envelope-front-face {
-  transform: rotateY(88deg) scale(0.985);
+  transform: rotateY(70deg) translateX(-2%) scale(0.985);
 }
 
 .intro-overlay.is-flipped .envelope-front-face {
   opacity: 0;
-  transform: rotateY(92deg);
+  transform: rotateY(96deg) translateX(-3%) scale(0.985);
   pointer-events: none;
 }
 
@@ -1531,12 +1555,12 @@ body {
   opacity: 0;
   transform: rotateY(-88deg) scale(0.985);
   overflow: visible;
-  perspective: 900px;
+  perspective: 1080px;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   transition:
-    opacity 180ms ease,
-    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 220ms ease,
+    transform 680ms cubic-bezier(0.2, 0.82, 0.24, 1);
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.08), transparent 34%),
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 12px),
@@ -1550,6 +1574,8 @@ body {
 }
 
 .envelope-back-base,
+.envelope-back-face .invitation-card,
+.envelope-pocket,
 .back-invitation-card,
 .back-pocket {
   position: absolute;
@@ -1561,11 +1587,28 @@ body {
   z-index: 1;
   border-radius: 20px;
   background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(0deg, rgba(80, 31, 38, 0.035) 0 1px, transparent 1px 14px),
     radial-gradient(circle at 50% 18%, rgba(255, 242, 210, 0.08), transparent 30%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 34%),
     linear-gradient(145deg, #963443 0%, #842738 54%, #6f2e3f 100%);
 }
 
+.envelope-flap,
+.envelope-seal {
+  display: none !important;
+}
+
+.envelope-card-slot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: visible;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.envelope-back-face .invitation-card,
 .back-invitation-card {
   z-index: 2;
   left: 50%;
@@ -1584,18 +1627,34 @@ body {
     repeating-linear-gradient(90deg, rgba(126, 76, 52, 0.014) 0 1px, transparent 1px 12px);
   box-shadow:
     0 14px 28px rgba(66, 21, 28, 0.16),
+    0 2px 0 rgba(255, 255, 255, 0.54) inset,
     inset 0 0 0 4px rgba(255, 255, 255, 0.24);
   opacity: 1;
   transform: translateX(-50%) translateY(0);
-  transition: transform 820ms cubic-bezier(0.2, 0.86, 0.28, 1.12);
-  will-change: transform;
+  transition:
+    box-shadow 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 760ms cubic-bezier(0.18, 0.88, 0.28, 1.22);
+  will-change: transform, box-shadow;
 }
 
+.intro-overlay.is-card-out .envelope-back-face .invitation-card,
+.intro-overlay.state-card-out .envelope-back-face .invitation-card,
 .intro-overlay.is-card-out .back-invitation-card,
 .intro-overlay.state-card-out .back-invitation-card {
+  box-shadow:
+    0 20px 34px rgba(66, 21, 28, 0.2),
+    0 2px 0 rgba(255, 255, 255, 0.54) inset,
+    inset 0 0 0 4px rgba(255, 255, 255, 0.24);
+  transform: translateX(-50%) translateY(-52%);
+}
+
+.intro-overlay.state-card-settle .envelope-back-face .invitation-card,
+.intro-overlay.state-card-settle .back-invitation-card {
   transform: translateX(-50%) translateY(-48%);
 }
 
+.envelope-back-face .invitation-card::before,
+.envelope-back-face .invitation-card::after,
 .back-invitation-card::before,
 .back-invitation-card::after {
   content: "";
@@ -1606,14 +1665,18 @@ body {
   background: linear-gradient(90deg, transparent, rgba(185, 148, 95, 0.48), transparent);
 }
 
+.envelope-back-face .invitation-card::before,
 .back-invitation-card::before {
   top: 18px;
 }
 
+.envelope-back-face .invitation-card::after,
 .back-invitation-card::after {
   bottom: 18px;
 }
 
+.envelope-back-face .invitation-card-title,
+.envelope-back-face .invitation-card-kicker,
 .back-invitation-title {
   position: relative;
   z-index: 2;
@@ -1626,8 +1689,26 @@ body {
   letter-spacing: 0.22em;
   white-space: nowrap;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.64);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 420ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.intro-overlay.state-card-settle .envelope-back-face .invitation-card-title,
+.intro-overlay.state-card-settle .envelope-back-face .invitation-card-kicker,
+.intro-overlay.state-card-settle .back-invitation-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.envelope-back-face .invitation-card-names,
+.envelope-back-face .invitation-card-date {
+  display: none;
+}
+
+.envelope-pocket,
 .back-pocket {
   position: absolute;
   left: 0;
@@ -1638,15 +1719,19 @@ body {
   border-radius: 0 0 18px 18px;
   overflow: hidden;
   background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 232, 177, 0.08), transparent 36%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 34%),
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(90deg, rgba(70, 18, 30, 0.035) 0 1px, transparent 1px 10px),
     linear-gradient(145deg, rgba(132, 39, 56, 0.99), rgba(92, 24, 42, 0.99));
   box-shadow:
-    0 -10px 20px rgba(45, 8, 20, 0.2),
-    0 -1px 0 rgba(236, 198, 126, 0.34),
+    0 -12px 22px rgba(45, 8, 20, 0.22),
+    0 -1px 0 rgba(236, 198, 126, 0.42),
+    0 -2px 0 rgba(255, 255, 255, 0.05),
     inset 0 13px 24px rgba(255, 255, 255, 0.04);
 }
 
+.envelope-pocket::before,
 .back-pocket::before {
   content: "";
   position: absolute;
@@ -1654,9 +1739,10 @@ body {
   left: 8%;
   right: 8%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(236, 198, 126, 0.48), transparent);
+  background: linear-gradient(90deg, transparent, rgba(236, 198, 126, 0.62), transparent);
 }
 
+.envelope-pocket::after,
 .back-pocket::after {
   content: "";
   position: absolute;

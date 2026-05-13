@@ -325,6 +325,7 @@ function setupIntroOverlay() {
     "state-back",
     "state-back-hold",
     "state-card-out",
+    "state-card-settle",
     "state-fade-out",
     "state-finished"
   );
@@ -402,6 +403,7 @@ function setupIntroOverlay() {
     scheduleIntroStep(() => overlay.classList.add("is-flipped", "state-back"), 760);
     scheduleIntroStep(() => overlay.classList.add("state-back-hold"), 1120);
     scheduleIntroStep(() => overlay.classList.add("is-card-out", "state-card-out"), 1350);
+    scheduleIntroStep(() => overlay.classList.add("state-card-settle"), 2120);
     scheduleIntroStep(() => {
       overlay.classList.add("is-leaving", "state-fade-out");
       overlay.setAttribute("aria-hidden", "true");
