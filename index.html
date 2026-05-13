@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=block">
-  <link rel="stylesheet" href="style.css?v=20260513-intro-font-ready">
+  <link rel="stylesheet" href="style.css?v=20260513-content-motion">
 </head>
 <body>
   <div class="site-shell">
@@ -53,11 +53,19 @@
         </div>
         <div class="hero-content reveal is-visible">
           <p class="hero-english hero-kicker delay-1">WE ARE GETTING MARRIED</p>
+          <!-- 可修改：新人姓名 -->
+          <h1 class="hero-names reveal is-visible delay-5" id="hero-names">景翔 &amp; 佳柔</h1>
           <p class="hero-message reveal is-visible delay-4" id="hero-message">誠摯邀請您蒞臨見證我們的重要時刻</p>
           <!-- 可修改：婚禮日期 -->
           <p class="hero-date reveal is-visible delay-4" id="hero-date">2026.12.12</p>
-          <!-- 可修改：新人姓名 -->
-          <h1 class="hero-names reveal is-visible delay-5" id="hero-names">景翔 &amp; 佳柔</h1>
+          <div class="hero-info-panel reveal is-visible delay-5" aria-label="婚禮重點資訊">
+            <p class="hero-info-line hero-info-primary" id="hero-date-full">2026.12.12｜星期六｜午宴</p>
+            <p class="hero-info-line" id="hero-venue">彭園婚宴八德館 3F</p>
+            <p class="hero-info-line" id="hero-address">桃園市八德區介壽路一段728號3樓</p>
+            <p class="hero-info-line" id="hero-time">迎賓入席 12:00｜準時開席</p>
+          </div>
+          <a class="hero-map-button reveal is-visible delay-5" href="#map">開啟導航</a>
+          <p class="hero-guide-hint reveal is-visible delay-5">請將本頁保留，當日可直接開啟導航與查看入席資訊。</p>
         </div>
         <div class="ornament ornament-heart" aria-hidden="true">♡</div>
         <div class="hero-scroll-hint" aria-hidden="true">
@@ -66,180 +74,27 @@
         </div>
       </section>
 
-      <section class="section intro-section" id="intro">
-        <div class="halo halo-left"></div>
-        <div class="halo halo-right"></div>
-        <div class="section-card split-card">
-          <div class="split-media media-frame">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo1.jpg" alt="新人婚紗照">
-            <div class="media-placeholder">
-              <p class="placeholder-label">PHOTO</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-          </div>
-          <div class="split-copy reveal">
-            <p class="intro-names">景翔 &amp; 佳柔</p>
-            <p class="intro-script">Together is our favorite place to be.</p>
-            <div class="intro-copy">
-              <p>一路走來，謝謝彼此相伴</p>
-              <p>在這個重要的日子裡</p>
-              <p>我們誠摯邀請您蒞臨</p>
-              <p>與我們一同分享這份喜悅</p>
-            </div>
-          </div>
+      <section class="section guest-actions-section" id="guest-guide">
+        <div class="guest-actions-head reveal">
+          <p class="section-english">FOR OUR GUESTS</p>
+          <h2 class="section-title">當天請記得</h2>
         </div>
-      </section>
-
-      <section class="section welcome-section" id="welcome">
-        <div class="section-card invitation-card reveal">
-          <p class="section-english">WELCOME TO OUR WEDDING</p>
-          <div class="oval-photo media-frame">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo2.jpg" alt="邀請頁婚紗照">
-            <div class="media-placeholder">
-              <p class="placeholder-label">INVITATION</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-            <div class="oval-message">
-              <p>邀請你們</p>
-              <p>參加我們的婚禮</p>
-            </div>
-          </div>
-          <div class="welcome-copy">
-            <p>有些幸福，因為被見證而更加完整；</p>
-            <p>有些時刻，因為有您在場而更加珍貴。</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section gallery-section" id="gallery">
-        <div class="gallery-head reveal">
-          <p class="section-english">PHOTO STORY</p>
-          <h2 class="section-title">我們的故事章節</h2>
-          <p class="section-note">把平凡日常收進照片裡，成為婚禮前最溫柔的序章。</p>
-        </div>
-        <div class="gallery-grid">
-          <div class="gallery-pair">
-            <article class="story-card story-card-primary reveal">
-              <div class="media-frame tall-frame">
-                <!-- 可修改：照片路徑 -->
-                <img src="assets/photos/photo1.jpg" alt="照片故事 1">
-                <div class="media-placeholder">
-                  <p class="placeholder-label">MEMORY 01</p>
-                  <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-                </div>
-              </div>
-              <div class="story-caption">
-                <p class="story-chapter">Chapter 01</p>
-                <h3>相遇以後的日常</h3>
-                <p>一路走來，謝謝彼此相伴。</p>
-              </div>
-            </article>
-            <article class="story-card story-card-offset reveal delay-1">
-              <div class="media-frame tall-frame">
-                <!-- 可修改：照片路徑 -->
-                <img src="assets/photos/photo2.jpg" alt="照片故事 2">
-                <div class="media-placeholder">
-                  <p class="placeholder-label">MEMORY 02</p>
-                  <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-                </div>
-              </div>
-              <div class="story-caption">
-                <p class="story-chapter">Chapter 02</p>
-                <h3>一起走過的風景</h3>
-                <p>有些時刻，因為被記得而更加珍貴。</p>
-              </div>
-            </article>
-          </div>
-          <article class="story-card story-wide reveal delay-2">
-            <div class="media-frame wide-frame">
-              <!-- 可修改：照片路徑 -->
-              <img src="assets/photos/photo3.jpg" alt="照片故事 3">
-              <div class="media-placeholder">
-                <p class="placeholder-label">MEMORY 03</p>
-                <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-              </div>
-            </div>
-            <div class="story-caption">
-              <p class="story-chapter">Chapter 03</p>
-              <h3>往後餘生，請多指教</h3>
-              <p>願往後每一段風景，都有彼此同行。</p>
-            </div>
+        <div class="guest-action-grid" data-reveal-group>
+          <article class="guest-action-card reveal">
+            <span class="guest-action-number">01</span>
+            <h3>12:00 前入席</h3>
+            <p>午宴將準時開始，建議提早抵達。</p>
           </article>
-        </div>
-      </section>
-
-      <section class="section calendar-section" id="calendar">
-        <div class="calendar-photo media-frame">
-          <!-- 可修改：照片路徑 -->
-          <img src="assets/photos/cover.jpg" alt="婚禮日期背景照片">
-          <div class="media-placeholder">
-            <p class="placeholder-label">DATE</p>
-            <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-          </div>
-          <div class="calendar-overlay"></div>
-          <div class="calendar-content reveal">
-            <div class="calendar-date">12 / 12</div>
-            <div class="calendar-card">
-              <p class="calendar-year">2026 DECEMBER</p>
-              <div class="calendar-grid" aria-label="2026 年 12 月月曆">
-                <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-                <span class="muted">29</span><span class="muted">30</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span class="marked">12</span>
-                <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
-                <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
-                <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span class="muted">1</span><span class="muted">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section chinese-section" id="blessing">
-        <div class="section-card chinese-card reveal">
-          <div class="double-happiness">囍</div>
-          <div class="blessing-copy">
-            <p>兩姓聯姻，一堂締約</p>
-            <p>良辰永結，匹配同稱</p>
-            <p>願你我往後餘生</p>
-            <p>冷暖相知，喜樂同享</p>
-            <p>同量天地寬，共度日月長</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section chinese-gallery-section" id="chinese-gallery">
-        <div class="gallery-head reveal">
-          <p class="section-english">CHINESE STYLE</p>
-          <h2 class="section-title">中式婚禮意象</h2>
-        </div>
-        <div class="chinese-gallery">
-          <div class="media-frame reveal">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo2.jpg" alt="中式婚紗 1">
-            <div class="media-placeholder">
-              <p class="placeholder-label">CHINESE 01</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-          </div>
-          <div class="gallery-divider ribbon-divider" aria-hidden="true">♡</div>
-          <div class="media-frame reveal delay-1">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo3.jpg" alt="中式婚紗 2">
-            <div class="media-placeholder">
-              <p class="placeholder-label">CHINESE 02</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-          </div>
-          <div class="media-frame reveal delay-2">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo1.jpg" alt="中式婚紗 3">
-            <div class="media-placeholder">
-              <p class="placeholder-label">CHINESE 03</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-          </div>
+          <article class="guest-action-card reveal">
+            <span class="guest-action-number">02</span>
+            <h3>直接開啟導航</h3>
+            <p>可點選下方 Google Maps 按鈕前往會館。</p>
+          </article>
+          <article class="guest-action-card reveal">
+            <span class="guest-action-number">03</span>
+            <h3>抵達後前往 3 樓</h3>
+            <p>宴會廳資訊將於婚禮前另行告知。</p>
+          </article>
         </div>
       </section>
 
@@ -247,31 +102,36 @@
         <div class="section-card info-card reveal">
           <p class="section-english">WEDDING INFO</p>
           <h2 class="section-title">婚禮資訊</h2>
-          <div class="info-list">
-            <article class="info-item">
+          <p class="section-note">賓客到場最需要的資訊整理如下，建議先確認日期、時間與導航地點。</p>
+          <div class="info-list" data-reveal-group>
+            <article class="info-item reveal">
               <span class="info-label">日期</span>
               <p class="info-value" id="info-date">2026年12月12日 星期六</p>
             </article>
-            <article class="info-item">
+            <article class="info-item reveal">
+              <span class="info-label">時間</span>
+              <p class="info-value" id="info-time">午宴｜迎賓入席 12:00｜準時開席</p>
+            </article>
+            <article class="info-item reveal">
               <span class="info-label">地點</span>
               <!-- 可修改：婚禮地點 -->
               <p class="info-value" id="info-venue">彭園婚宴八德館</p>
             </article>
-            <article class="info-item">
-              <span class="info-label">宴會廳</span>
-              <!-- 可修改：宴會廳 -->
-              <p class="info-value" id="info-hall">宴會廳資訊將於婚禮前另行告知</p>
-            </article>
-            <article class="info-item">
-              <span class="info-label">時間</span>
-              <p class="info-value" id="info-time">午宴｜迎賓入席 12:00｜準時開席</p>
-            </article>
-            <article class="info-item">
+            <article class="info-item reveal">
               <span class="info-label">地址</span>
               <!-- 可修改：婚禮地址 -->
               <p class="info-value" id="info-address">桃園市八德區介壽路一段728號3樓</p>
             </article>
-            <article class="info-item">
+            <article class="info-item reveal">
+              <span class="info-label">樓層</span>
+              <p class="info-value" id="info-floor">3 樓</p>
+            </article>
+            <article class="info-item reveal">
+              <span class="info-label">宴會廳</span>
+              <!-- 可修改：宴會廳 -->
+              <p class="info-value" id="info-hall">宴會廳資訊將於婚禮前另行告知</p>
+            </article>
+            <article class="info-item reveal">
               <span class="info-label">停車</span>
               <p class="info-value" id="info-parking">會館周邊設有停車資訊，建議賓客提早抵達</p>
             </article>
@@ -281,43 +141,83 @@
 
       <section class="section map-section" id="map">
         <div class="section-card map-card reveal">
-          <p class="section-english">MAP &amp; TRAFFIC</p>
-          <h2 class="section-title">地圖 / 交通資訊</h2>
+          <p class="section-english">DIRECTION</p>
+          <h2 class="section-title">到場方式</h2>
           <div class="map-placeholder">
             <div class="map-orb"></div>
-            <p class="map-placeholder-title">Google Maps</p>
+            <p class="map-placeholder-title">彭園婚宴八德館</p>
             <p class="map-placeholder-copy">桃園市八德區介壽路一段728號3樓</p>
           </div>
           <div class="map-copy">
-            <p id="map-description-line1">點擊下方按鈕即可開啟 Google 地圖導航。</p>
-            <p id="map-description-line2">建議提早出發，預留交通與停車時間。</p>
+            <p id="map-description-line1">建議直接使用 Google Maps 導航至彭園婚宴八德館。</p>
+            <p id="map-description-line2">週末中午車流較多，建議預留交通與停車時間。</p>
           </div>
-          <button class="primary-button" id="map-button" type="button">開啟導航</button>
+          <button class="primary-button" id="map-button" type="button">開啟 Google Maps 導航</button>
         </div>
       </section>
 
       <section class="section reminder-section" id="reminder">
         <div class="section-card info-card reveal">
           <p class="section-english">REMINDER</p>
-          <h2 class="section-title">當日提醒</h2>
-          <ul class="reminder-list" id="reminder-list">
-            <li>建議提前 10 至 15 分鐘抵達會場</li>
-            <li>請依現場人員指引入席</li>
-            <li>敬請準時入席，一同分享我們的重要時刻</li>
-          </ul>
+          <h2 class="section-title">當日小提醒</h2>
+          <div class="reminder-card-grid" data-reveal-group>
+            <article class="reminder-card reveal">
+              <span class="reminder-card-label">重要提醒</span>
+              <ul>
+                <li>請於 12:00 前完成入席</li>
+                <li>午宴將準時開席</li>
+                <li>抵達後請依現場指引前往宴會廳</li>
+              </ul>
+            </article>
+            <article class="reminder-card reveal">
+              <span class="reminder-card-label">補充資訊</span>
+              <ul>
+                <li>宴會廳資訊將於婚禮前補充</li>
+                <li>停車與交通資訊請以現場及導航為準</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section gallery-section selected-gallery-section" id="gallery">
+        <div class="gallery-head reveal">
+          <p class="section-english">WEDDING MOMENTS</p>
+          <h2 class="section-title">婚禮前的小小分享</h2>
+          <p class="section-note">在這一天到來之前，先與你分享幾張我們喜歡的畫面。</p>
+        </div>
+        <div class="selected-gallery" data-reveal-group>
+          <div class="media-frame selected-photo-main reveal">
+            <!-- 可修改：照片路徑 -->
+            <img src="assets/photos/photo1.jpg" alt="婚禮精選照片主圖">
+            <div class="media-placeholder">
+              <p class="placeholder-label">PHOTO 01</p>
+              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
+            </div>
+          </div>
+          <div class="selected-photo-pair">
+            <div class="media-frame selected-photo-small reveal delay-1">
+              <!-- 可修改：照片路徑 -->
+              <img src="assets/photos/photo2.jpg" alt="婚禮精選照片 2">
+              <div class="media-placeholder">
+                <p class="placeholder-label">PHOTO 02</p>
+                <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
+              </div>
+            </div>
+            <div class="media-frame selected-photo-small reveal delay-2">
+              <!-- 可修改：照片路徑 -->
+              <img src="assets/photos/photo3.jpg" alt="婚禮精選照片 3">
+              <div class="media-placeholder">
+                <p class="placeholder-label">PHOTO 03</p>
+                <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="section countdown-section" id="countdown">
         <div class="section-card countdown-card reveal">
-          <div class="media-frame countdown-photo">
-            <!-- 可修改：照片路徑 -->
-            <img src="assets/photos/photo3.jpg" alt="婚禮倒數照片">
-            <div class="media-placeholder">
-              <p class="placeholder-label">COUNTDOWN</p>
-              <p class="placeholder-copy">婚紗照片準備中，請確認照片檔案已放置於 assets/photos/。</p>
-            </div>
-          </div>
           <div class="countdown-copy">
             <p class="section-english">COUNTDOWN</p>
             <h2 class="section-title">距離婚禮還有</h2>
@@ -344,10 +244,9 @@
           </div>
           <div class="thanks-copy">
             <p class="thanks-label">Thank You</p>
-            <p>謝謝您在這個重要日子裡與我們相聚</p>
-            <p>期待婚禮當天與您見面</p>
-            <p class="thanks-strong">景翔 &amp; 佳柔</p>
-            <p class="thanks-date">2026.12.12</p>
+            <p>謝謝你願意在這一天來到我們身邊，</p>
+            <p>與我們一起見證人生中重要的時刻。</p>
+            <p class="thanks-strong">景翔 &amp; 佳柔 敬邀</p>
           </div>
         </div>
       </section>
@@ -362,6 +261,7 @@
       "date": "2026-12-12",
       "venue": "彭園婚宴八德館",
       "hall": "宴會廳資訊將於婚禮前另行告知",
+      "floor": "3 樓",
       "time": "午宴｜迎賓入席 12:00｜準時開席",
       "address": "桃園市八德區介壽路一段728號3樓",
       "parking": "會館周邊設有停車資訊，建議賓客提早抵達",
@@ -376,6 +276,6 @@
     }
   </script>
 
-  <script src="script.js?v=20260513-intro-font-ready"></script>
+  <script src="script.js?v=20260513-content-motion"></script>
 </body>
 </html>

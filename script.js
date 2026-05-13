@@ -5,6 +5,7 @@ const defaultWeddingInfo = {
   hero_message: "誠摯邀請您蒞臨見證我們的重要時刻",
   venue: "婚禮地點請參考 wedding_info.json",
   hall: "宴會廳資訊請參考 wedding_info.json",
+  floor: "3 樓",
   time: "午宴｜迎賓入席 12:00｜準時開席",
   address: "婚禮地址請參考 wedding_info.json",
   parking: "停車資訊請參考 wedding_info.json",
@@ -21,13 +22,15 @@ const defaultWeddingInfo = {
     "有些時刻，因為有您在場而更加珍貴。"
   ],
   map_description: [
-    "點擊下方按鈕即可開啟 Google 地圖導航。",
-    "建議提早出發，預留交通與停車時間。"
+    "建議直接使用 Google Maps 導航至彭園婚宴八德館。",
+    "週末中午車流較多，建議預留交通與停車時間。"
   ],
   reminders: [
-    "建議提前 10 至 15 分鐘抵達會場",
-    "請依現場人員指引入席",
-    "敬請準時入席，一同分享我們的重要時刻"
+    "建議提早 10–15 分鐘抵達。",
+    "午宴將準時開始，敬請預留交通與入席時間。",
+    "抵達後可依現場指引前往宴會廳。",
+    "若有停車或宴會廳資訊，將於婚禮前補充。",
+    "如當日臨時需要協助，可依新人後續通知聯繫。"
   ],
   countdown_target: "2026-12-12T12:00:00",
   photo_paths: {
@@ -140,11 +143,16 @@ function renderWeddingInfo(data) {
   setText("hero-date", shortDate);
   setText("hero-names", `${groom} & ${bride}`);
   setText("hero-message", data.hero_message || defaultWeddingInfo.hero_message);
+  setText("hero-date-full", `${shortDate}｜${formatWeekdayZh(data.date || defaultWeddingInfo.date)}｜午宴`);
+  setText("hero-venue", `${data.venue || defaultWeddingInfo.venue} ${formatFloorShort(data.floor || defaultWeddingInfo.floor)}`.trim());
+  setText("hero-address", data.address || defaultWeddingInfo.address);
+  setText("hero-time", data.time || defaultWeddingInfo.time);
   setTextBySelector(".envelope-front-names", `${groom} & ${bride}`);
   setTextBySelector(".envelope-front-date", shortDate);
   setText("info-date", `${dateDisplay} ${formatWeekdayZh(data.date || defaultWeddingInfo.date)}`);
   setText("info-venue", data.venue || defaultWeddingInfo.venue);
   setText("info-hall", data.hall || defaultWeddingInfo.hall);
+  setText("info-floor", data.floor || defaultWeddingInfo.floor);
   setText("info-time", data.time || defaultWeddingInfo.time);
   setText("info-address", data.address || defaultWeddingInfo.address);
   setText("info-parking", data.parking || defaultWeddingInfo.parking);
@@ -213,6 +221,9 @@ function applyPhotoPaths(photoPaths) {
     { selector: ".story-card-primary .media-frame img", src: photoPaths.photo1 },
     { selector: ".story-card-offset .media-frame img", src: photoPaths.photo2 },
     { selector: ".wide-frame img", src: photoPaths.photo3 },
+    { selector: ".selected-photo-main img", src: photoPaths.photo1 },
+    { selector: ".selected-photo-pair .media-frame:nth-child(1) img", src: photoPaths.photo2 },
+    { selector: ".selected-photo-pair .media-frame:nth-child(2) img", src: photoPaths.photo3 },
     { selector: ".calendar-photo img", src: photoPaths.cover },
     { selector: ".countdown-photo img", src: photoPaths.photo3 },
     { selector: ".thanks-photo img", src: photoPaths.cover }
@@ -469,11 +480,23 @@ function hasPlayableAudioSource(audio) {
 }
 
 function setupRevealObserver() {
-  const elements = document.querySelectorAll(".reveal, .media-frame");
+  const elements = [...document.querySelectorAll(".reveal, .media-frame")];
+  const groupCounters = new WeakMap();
 
-  elements.forEach((element) => element.classList.add("is-visible"));
+  elements.forEach((element) => {
+    const group = element.closest("[data-reveal-group]");
+
+    if (!group || element.classList.contains("is-visible")) {
+      return;
+    }
+
+    const index = groupCounters.get(group) || 0;
+    element.style.setProperty("--reveal-delay", `${Math.min(index * 100, 360)}ms`);
+    groupCounters.set(group, index + 1);
+  });
 
   if (!("IntersectionObserver" in window)) {
+    elements.forEach((element) => element.classList.add("is-visible"));
     return;
   }
 
@@ -488,7 +511,11 @@ function setupRevealObserver() {
     threshold: 0.16
   });
 
-  elements.forEach((element) => observer.observe(element));
+  elements.forEach((element) => {
+    if (!element.classList.contains("is-visible")) {
+      observer.observe(element);
+    }
+  });
 }
 
 function setupCountdown(targetString) {
@@ -588,6 +615,12 @@ function formatWeekdayZh(dateString) {
   }
 
   return weekdays[date.getDay()];
+}
+
+function formatFloorShort(value) {
+  return String(value || "")
+    .replace(/\s+/g, "")
+    .replace("樓", "F");
 }
 
 function parseDateValue(dateString) {
