@@ -3,13 +3,13 @@ const defaultWeddingInfo = {
   bride: "新娘",
   date: "2026-12-12",
   hero_message: "誠摯邀請您蒞臨見證我們的重要時刻",
-  venue: "婚禮地點請參考 wedding_info.json",
-  hall: "宴會廳資訊請參考 wedding_info.json",
+  venue: "彭園婚宴八德館",
+  hall: "Room A",
   floor: "3 樓",
   time: "午宴｜迎賓入席 12:00｜準時開席",
-  address: "婚禮地址請參考 wedding_info.json",
-  parking: "停車資訊請參考 wedding_info.json",
-  map_link: "https://www.google.com/maps",
+  address: "桃園市八德區介壽路一段728號3樓",
+  parking: "停至置地生活廣場地下停車場（藍色區塊）",
+  map_link: "https://www.google.com/maps/search/?api=1&query=彭園婚宴八德館 桃園市八德區介壽路一段728號3樓",
   english_quote: "Together is our favorite place to be.",
   intro_lines: [
     "一路走來，謝謝彼此相伴",
@@ -33,11 +33,12 @@ const defaultWeddingInfo = {
     "如當日臨時需要協助，可依新人後續通知聯繫。"
   ],
   countdown_target: "2026-12-12T12:00:00",
+  hero_photo: "assets/photos/ring.jpg?v=20260819-ring-hero",
   photo_paths: {
-    cover: "assets/photos/cover.jpg?v=20260819-photo-refresh",
-    photo1: "assets/photos/photo1.jpg?v=20260819-photo-refresh",
-    photo2: "assets/photos/photo2.jpg?v=20260819-photo-refresh",
-    photo3: "assets/photos/photo3.jpg?v=20260819-photo-refresh"
+    cover: "assets/photos/cover.jpg",
+    photo1: "assets/photos/photo1.jpg",
+    photo2: "assets/photos/photo2.jpg",
+    photo3: "assets/photos/photo3.jpg"
   }
 };
 
@@ -59,7 +60,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderWeddingInfo(weddingInfo);
   setupHeroSlides();
   setupMediaFrames();
+  setupHeroMapButton(weddingInfo.map_link);
   setupMapButton(weddingInfo.map_link);
+  setupCopyAddressButton(weddingInfo.address);
+  setupTrafficMapModal();
   setupMusicToggle();
   setupIntroOverlay();
   setupRevealObserver();
@@ -182,7 +186,7 @@ function renderWeddingInfo(data) {
   }
 
   renderReminderList(reminders);
-  applyPhotoPaths(data.photo_paths || defaultWeddingInfo.photo_paths);
+  applyPhotoPaths(data.photo_paths || defaultWeddingInfo.photo_paths, data.hero_photo || defaultWeddingInfo.hero_photo);
 }
 
 function getArrayValue(value, fallback) {
@@ -205,9 +209,9 @@ function renderReminderList(items) {
   });
 }
 
-function applyPhotoPaths(photoPaths) {
+function applyPhotoPaths(photoPaths, heroPhoto) {
   const heroSlides = document.querySelectorAll("[data-hero-slide]");
-  const coverPaths = [photoPaths.cover, photoPaths.photo1, photoPaths.photo2].filter(Boolean);
+  const coverPaths = [heroPhoto || photoPaths.cover].filter(Boolean);
 
   heroSlides.forEach((slide, index) => {
     if (coverPaths[index]) {
@@ -290,6 +294,130 @@ function setupMapButton(mapLink) {
 
   button.addEventListener("click", () => {
     window.open(mapLink || defaultWeddingInfo.map_link, "_blank", "noopener,noreferrer");
+  });
+}
+
+function setupHeroMapButton(mapLink) {
+  const button = document.getElementById("hero-map-button");
+  const targetLink = mapLink || defaultWeddingInfo.map_link;
+
+  if (!button) {
+    return;
+  }
+
+  button.href = targetLink;
+  button.target = "_blank";
+  button.rel = "noopener noreferrer";
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.open(targetLink, "_blank", "noopener,noreferrer");
+  });
+}
+
+function setupCopyAddressButton(address) {
+  const button = document.getElementById("copy-address-button");
+  const text = address || defaultWeddingInfo.address;
+  const defaultLabel = "複製地址";
+  const copiedLabel = "已複製地址";
+  let resetTimerId = null;
+
+  if (!button) {
+    return;
+  }
+
+  button.addEventListener("click", async () => {
+    const copied = await copyText(text);
+
+    if (!copied) {
+      return;
+    }
+
+    button.textContent = copiedLabel;
+    window.clearTimeout(resetTimerId);
+    resetTimerId = window.setTimeout(() => {
+      button.textContent = defaultLabel;
+    }, 1600);
+  });
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return fallbackCopyText(text);
+    }
+  }
+
+  return fallbackCopyText(text);
+}
+
+function fallbackCopyText(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  try {
+    return document.execCommand("copy");
+  } catch {
+    return false;
+  } finally {
+    document.body.removeChild(textarea);
+  }
+}
+
+function setupTrafficMapModal() {
+  const modal = document.getElementById("traffic-map-modal");
+  const openButton = document.getElementById("traffic-map-open");
+  const closeButton = document.getElementById("traffic-map-close");
+  const image = modal?.querySelector("img");
+
+  if (!modal || !openButton || !closeButton) {
+    return;
+  }
+
+  const openModal = () => {
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-traffic-map-open");
+    closeButton.focus({ preventScroll: true });
+  };
+
+  const closeModal = () => {
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("is-traffic-map-open");
+    openButton.focus({ preventScroll: true });
+  };
+
+  openButton.addEventListener("click", openModal);
+  closeButton.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !modal.hidden) {
+      closeModal();
+    }
+  });
+
+  image?.addEventListener("error", () => {
+    modal.classList.add("is-image-missing");
+  });
+
+  image?.addEventListener("load", () => {
+    modal.classList.remove("is-image-missing");
   });
 }
 
