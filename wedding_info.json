@@ -34,9 +34,9 @@
   ],
   "countdown_target": "2026-12-12T12:00:00",
   "photo_paths": {
-    "cover": "assets/photos/cover.jpg",
-    "photo1": "assets/photos/photo1.jpg",
-    "photo2": "assets/photos/photo2.jpg",
-    "photo3": "assets/photos/photo3.jpg"
+    "cover": "assets/photos/cover.jpg?v=20260819-photo-refresh",
+    "photo1": "assets/photos/photo1.jpg?v=20260819-photo-refresh",
+    "photo2": "assets/photos/photo2.jpg?v=20260819-photo-refresh",
+    "photo3": "assets/photos/photo3.jpg?v=20260819-photo-refresh"
   }
 }
