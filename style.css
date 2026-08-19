@@ -881,6 +881,19 @@ span {
   gap: 10px;
 }
 
+.reminder-card h3 {
+  margin: 14px 0 0;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  color: #3d302c;
+}
+
+.reminder-card p {
+  margin: 9px 0 0;
+  color: rgba(47, 42, 39, 0.76);
+  line-height: 1.76;
+}
+
 .reminder-card li {
   position: relative;
   padding-left: 18px;
@@ -2343,7 +2356,7 @@ body.is-intro-active .invitation {
   }
 
   .reminder-card-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
