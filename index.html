@@ -54,21 +54,14 @@
           <!-- 可修改：新人姓名 -->
           <h1 class="hero-names reveal is-visible delay-5" id="hero-names">景翔 &amp; 佳柔</h1>
           <p class="hero-message reveal is-visible delay-4" id="hero-message">誠摯邀請您蒞臨見證我們的重要時刻</p>
-          <!-- 可修改：婚禮日期 -->
-          <p class="hero-date reveal is-visible delay-4" id="hero-date">2026.12.12</p>
           <div class="hero-info-panel reveal is-visible delay-5" aria-label="婚禮重點資訊">
             <p class="hero-info-line hero-info-primary" id="hero-date-full">2026.12.12｜星期六｜午宴</p>
-            <p class="hero-info-line" id="hero-venue">彭園婚宴八德館 3F</p>
+            <p class="hero-info-line" id="hero-venue">彭園婚宴八德館 3F Room A</p>
             <p class="hero-info-line" id="hero-address">桃園市八德區介壽路一段728號3樓</p>
             <p class="hero-info-line" id="hero-time">迎賓入席 12:00｜準時開席</p>
           </div>
           <a class="hero-map-button reveal is-visible delay-5" id="hero-map-button" href="https://www.google.com/maps/search/?api=1&query=彭園婚宴八德館 桃園市八德區介壽路一段728號3樓" target="_blank" rel="noopener noreferrer">開啟導航</a>
-          <p class="hero-guide-hint reveal is-visible delay-5">請將本頁保留，當日可直接開啟導航與查看入席資訊。</p>
-        </div>
-        <div class="ornament ornament-heart" aria-hidden="true">♡</div>
-        <div class="hero-scroll-hint" aria-hidden="true">
-          <span>Scroll</span>
-          <span class="hero-scroll-arrow">↓</span>
+          <p class="hero-guide-hint reveal is-visible delay-5" id="hero-guide-hint">下滑查看婚禮資訊</p>
         </div>
       </section>
 
@@ -146,9 +139,7 @@
           <p class="section-english">DIRECTION</p>
           <h2 class="section-title">到場方式</h2>
           <div class="map-placeholder">
-            <div class="map-orb"></div>
-            <p class="map-placeholder-title">彭園婚宴八德館</p>
-            <p class="map-placeholder-copy">桃園市八德區介壽路一段728號3樓</p>
+            <img class="map-preview-image" src="assets/photos/traffic-preview.png" alt="到場方式交通資訊圖" loading="lazy">
           </div>
           <div class="map-copy">
             <p id="map-description-line1">建議直接使用 Google Maps 導航至彭園婚宴八德館。</p>
@@ -261,7 +252,7 @@
   <div class="traffic-map-modal" id="traffic-map-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="交通資訊圖">
     <div class="traffic-map-dialog">
       <button class="traffic-map-close" id="traffic-map-close" type="button" aria-label="關閉交通資訊圖">×</button>
-      <img src="assets/photos/traffic-map.jpg" alt="交通資訊圖">
+      <img src="assets/photos/traffic-detail.png" alt="交通資訊圖">
       <p class="traffic-map-placeholder">交通資訊圖準備中</p>
     </div>
   </div>
@@ -272,6 +263,8 @@
       "groom": "景翔",
       "bride": "佳柔",
       "date": "2026-12-12",
+      "hero_message": "誠摯邀請您蒞臨見證我們的重要時刻",
+      "hero_guide_hint": "下滑查看婚禮資訊",
       "venue": "彭園婚宴八德館",
       "hall": "Room A",
       "floor": "3 樓",
@@ -290,6 +283,6 @@
     }
   </script>
 
-  <script src="script.js?v=20260819-traffic-map"></script>
+  <script src="script.js?v=20260820-hero-clean"></script>
 </body>
 </html>

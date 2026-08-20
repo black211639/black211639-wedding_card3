@@ -3,6 +3,7 @@ const defaultWeddingInfo = {
   bride: "新娘",
   date: "2026-12-12",
   hero_message: "誠摯邀請您蒞臨見證我們的重要時刻",
+  hero_guide_hint: "下滑查看婚禮資訊",
   venue: "彭園婚宴八德館",
   hall: "Room A",
   floor: "3 樓",
@@ -144,11 +145,15 @@ function renderWeddingInfo(data) {
   const mapLines = getArrayValue(data.map_description, defaultWeddingInfo.map_description);
   const reminders = getArrayValue(data.reminders, defaultWeddingInfo.reminders);
 
-  setText("hero-date", shortDate);
   setText("hero-names", `${groom} & ${bride}`);
   setText("hero-message", data.hero_message || defaultWeddingInfo.hero_message);
+  setText("hero-guide-hint", data.hero_guide_hint || defaultWeddingInfo.hero_guide_hint);
   setText("hero-date-full", `${shortDate}｜${formatWeekdayZh(data.date || defaultWeddingInfo.date)}｜午宴`);
-  setText("hero-venue", `${data.venue || defaultWeddingInfo.venue} ${formatFloorShort(data.floor || defaultWeddingInfo.floor)}`.trim());
+  setText("hero-venue", [
+    data.venue || defaultWeddingInfo.venue,
+    formatFloorShort(data.floor || defaultWeddingInfo.floor),
+    data.hall || defaultWeddingInfo.hall
+  ].filter(Boolean).join(" "));
   setText("hero-address", data.address || defaultWeddingInfo.address);
   setText("hero-time", data.time || defaultWeddingInfo.time);
   setTextBySelector(".envelope-front-names", `${groom} & ${bride}`);
